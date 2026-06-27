@@ -1,0 +1,247 @@
+:root {
+  color-scheme: dark;
+  --carq-olive: #65695a;
+  --carq-white: #ffffff;
+  --carq-line: clamp(0.55px, 0.12vw, 1.05px);
+  --carq-wordmark-y: clamp(18px, 2.4vw, 34px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background: var(--carq-olive);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+.carq-page,
+.carq-motion {
+  min-height: 100svh;
+}
+
+.carq-motion {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  background: var(--carq-olive);
+}
+
+.carq-motion__stage {
+  position: relative;
+  width: min(76vw, 760px);
+  height: min(48vw, 430px);
+  display: grid;
+  place-items: center;
+}
+
+.carq-motion__origin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(5px, 0.9vw, 8px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: var(--carq-white);
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 3;
+}
+
+.carq-motion__guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+}
+
+.carq-motion__guide-svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  overflow: visible;
+  transform: translate(-50%, -50%);
+}
+
+.carq-motion__guide-svg--symbol {
+  width: min(34vw, 250px);
+  aspect-ratio: 635.83 / 633.81;
+}
+
+.carq-motion__guide-svg--wordmark {
+  width: min(68vw, 620px);
+  aspect-ratio: 914.14 / 192.95;
+  transform: translate(-50%, calc(-50% + var(--carq-wordmark-y)));
+}
+
+.carq-motion__guide-set {
+  opacity: 0;
+}
+
+.carq-motion__guide-line {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.3);
+  stroke-width: 0.85;
+  stroke-dasharray: 7 8;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.carq-motion__guide-line--solid {
+  stroke: rgb(255 255 255 / 0.4);
+  stroke-dasharray: none;
+}
+
+.carq-motion__guide-line--soft {
+  stroke: rgb(255 255 255 / 0.22);
+  stroke-dasharray: 4 10;
+}
+
+.carq-motion__guide-node {
+  fill: var(--carq-white);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  vector-effect: non-scaling-stroke;
+}
+
+.carq-motion__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  will-change: opacity, transform;
+  z-index: 2;
+}
+
+.carq-motion__logo--symbol {
+  width: min(34vw, 250px);
+  aspect-ratio: 635.83 / 633.81;
+}
+
+.carq-motion__logo--wordmark {
+  width: min(68vw, 620px);
+  aspect-ratio: 914.14 / 192.95;
+}
+
+.carq-motion__logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.carq-motion__logo path,
+.carq-motion__logo polygon,
+.carq-motion__logo circle,
+.carq-motion__logo rect,
+.carq-motion__logo line,
+.carq-motion__logo polyline {
+  fill: var(--carq-white);
+  fill-opacity: 0;
+  stroke: var(--carq-white);
+  stroke-width: var(--carq-line);
+  stroke-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.carq-motion__replay {
+  position: fixed;
+  right: clamp(18px, 3vw, 34px);
+  bottom: clamp(18px, 3vw, 34px);
+  min-width: 84px;
+  min-height: 38px;
+  padding: 0 18px;
+  border: 1px solid rgb(255 255 255 / 0.42);
+  border-radius: 999px;
+  color: var(--carq-white);
+  background: transparent;
+  letter-spacing: 0;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.carq-motion__replay:hover,
+.carq-motion__replay:focus-visible {
+  border-color: rgb(255 255 255 / 0.76);
+  background: rgb(255 255 255 / 0.08);
+  outline: none;
+}
+
+.carq-motion.is-complete .carq-motion__replay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 680px) {
+  .carq-motion__stage {
+    width: 86vw;
+    height: 58vw;
+  }
+
+  .carq-motion__logo--symbol {
+    width: min(48vw, 230px);
+  }
+
+  .carq-motion__logo--wordmark {
+    width: min(82vw, 560px);
+  }
+
+  .carq-motion__guide-svg--symbol {
+    width: min(48vw, 230px);
+  }
+
+  .carq-motion__guide-svg--wordmark {
+    width: min(82vw, 560px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carq-motion__origin {
+    display: none;
+  }
+
+  .carq-motion__logo--wordmark {
+    opacity: 1;
+  }
+
+  .carq-motion__logo path,
+  .carq-motion__logo polygon,
+  .carq-motion__logo circle,
+  .carq-motion__logo rect,
+  .carq-motion__logo line,
+  .carq-motion__logo polyline {
+    fill-opacity: 1;
+    stroke-opacity: 0;
+  }
+
+  .carq-motion__replay {
+    display: none;
+  }
+}

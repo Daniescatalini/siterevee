@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>C.ARQ Motion Intro</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="carq-page" aria-label="Abertura animada C.ARQ">
+      <section
+        class="carq-motion"
+        data-carq-motion
+        data-symbol-src="assets/carq-motion/carq-symbol.svg"
+        data-wordmark-src="assets/carq-motion/carq-wordmark.svg"
+      >
+        <div class="carq-motion__stage" aria-hidden="true">
+          <div class="carq-motion__guides" data-guides>
+            <svg class="carq-motion__guide-svg carq-motion__guide-svg--symbol" viewBox="0 0 635.83 633.81">
+              <g class="carq-motion__guide-set" data-symbol-guides>
+                <circle class="carq-motion__guide-line" cx="317.9" cy="316.9" r="308"/>
+                <circle class="carq-motion__guide-line carq-motion__guide-line--soft" cx="317.9" cy="316.9" r="181"/>
+                <path class="carq-motion__guide-line" d="M20 316.9H615"/>
+                <path class="carq-motion__guide-line" d="M317.9 18V615"/>
+                <path class="carq-motion__guide-line" d="M75.33 141.59H546.21"/>
+                <path class="carq-motion__guide-line" d="M116.49 504.59H537.93"/>
+                <path class="carq-motion__guide-line carq-motion__guide-line--solid" d="M264.52 157.04L537.93 516.73"/>
+                <path class="carq-motion__guide-line carq-motion__guide-line--solid" d="M116.49 504.59L311.06 242.7"/>
+                <path class="carq-motion__guide-line carq-motion__guide-line--solid" d="M245.01 157.15L527.04 528.02"/>
+                <rect class="carq-motion__guide-node" x="69.33" y="135.59" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="258.52" y="151.04" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="305.06" y="236.7" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="531.93" y="510.73" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="591.91" y="308.1" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="611.91" y="328.1" width="12" height="12"/>
+              </g>
+            </svg>
+
+            <svg class="carq-motion__guide-svg carq-motion__guide-svg--wordmark" viewBox="0 0 914.14 192.95">
+              <g class="carq-motion__guide-set" data-wordmark-guides>
+                <path class="carq-motion__guide-line" d="M0 4.46H914.14"/>
+                <path class="carq-motion__guide-line" d="M0 83.74H914.14"/>
+                <path class="carq-motion__guide-line" d="M0 121.11H914.14"/>
+                <path class="carq-motion__guide-line" d="M0 158.17H914.14"/>
+                <path class="carq-motion__guide-line" d="M0 188.7H914.14"/>
+                <path class="carq-motion__guide-line" d="M0 1.63V165.83"/>
+                <path class="carq-motion__guide-line" d="M82.11 1.63V165.83"/>
+                <path class="carq-motion__guide-line" d="M171.27 144.19V162.19"/>
+                <path class="carq-motion__guide-line" d="M273.75 4.46V162.44"/>
+                <path class="carq-motion__guide-line" d="M352.7 4.46V162.44"/>
+                <path class="carq-motion__guide-line" d="M431.65 4.46V162.44"/>
+                <path class="carq-motion__guide-line" d="M466.29 4.46V162.19"/>
+                <path class="carq-motion__guide-line" d="M622.02 4.46V162.19"/>
+                <path class="carq-motion__guide-line" d="M644.17 4V188.7"/>
+                <path class="carq-motion__guide-line" d="M808.33 4V188.7"/>
+                <path class="carq-motion__guide-line" d="M857.86 158.6V188.7"/>
+                <circle class="carq-motion__guide-line carq-motion__guide-line--soft" cx="82.11" cy="83.74" r="76.6"/>
+                <circle class="carq-motion__guide-line carq-motion__guide-line--soft" cx="726.25" cy="82.09" r="77.7"/>
+                <path class="carq-motion__guide-line carq-motion__guide-line--solid" d="M273.75 158.17L352.7 4.46L431.65 158.17"/>
+                <path class="carq-motion__guide-line carq-motion__guide-line--solid" d="M466.29 121.54H559.28L608.93 156.34"/>
+                <rect class="carq-motion__guide-node" x="76.11" y="77.74" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="165.27" y="147.19" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="346.7" y="-1.54" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="460.29" y="115.54" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="616.02" y="62.23" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="720.25" y="76.09" width="12" height="12"/>
+                <rect class="carq-motion__guide-node" x="851.86" y="152.6" width="12" height="12"/>
+              </g>
+            </svg>
+          </div>
+          <span class="carq-motion__origin"></span>
+          <div class="carq-motion__logo carq-motion__logo--symbol" data-symbol></div>
+          <div class="carq-motion__logo carq-motion__logo--wordmark" data-wordmark></div>
+        </div>
+
+        <button class="carq-motion__replay" type="button" data-replay aria-label="Repetir animação">
+          Replay
+        </button>
+      </section>
+
+      <template id="carq-symbol-template">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 635.83 633.81">
+          <path d="M537.93,516.73L264.52,157.04l281.69.04-11.41-15.26-459.47-.23C152.37,35.16,285.55-7.46,409.98,32.72c72.5,24.19,132.83,75.02,169.04,142.41l13.62-9.01c-40.83-77.31-114.82-134.59-199.23-156.3-97.34-25.07-200.79-1.45-277.95,62.77-33.05,27.47-60.33,61.47-80.1,99.52-50.71,97.61-46.63,214.41,10.49,308.4,22.48,37.01,52.51,69.22,87.77,94.71,73.11,52.81,165.57,70.94,253.37,50.22,80.55-19,150.42-68.42,195.64-138.33l-14.04-9.69-30.68,39.3ZM127.07,547.86c-57.62-46.82-95.44-114.25-105.97-188.09-10.53-70.82,5.11-142.71,44.07-202.62h179.84l66.05,85.55-39.11,51.02-155.46,210.87,11.26,10.91,192.36-260.32,206.82,272.84c-108.98,108.37-280.54,119.13-399.87,19.84Z"/>
+          <path d="M617.91,334.1c-10.76.76-20.61-7.94-20.03-19.23.57-11.83,9.88-20.07,21.45-18.93,8.74.88,15.3,7.06,16.37,16.41,1.3,11.64-6.98,20.99-17.78,21.75Z"/>
+        </svg>
+      </template>
+
+      <template id="carq-wordmark-template">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 914.14 192.95">
+          <g>
+            <path d="M857.86,158.6h-7.3c-5.2,13.37-13.62,25.13-29.1,26.12-12.5.87-21.04-5.57-30.82-11.76l-15.85-9.78c-4.58-2.6-9.04-4.7-14.24-6.56.86-.37,1.61-.74,2.35-1.24.87-.37,1.61-.74,2.48-1.24,2.35-1.24,4.58-2.6,6.81-4.08,2.1-1.49,4.33-3.1,6.32-4.71,1.98-1.73,3.96-3.47,5.82-5.32,1.86-1.86,3.59-3.84,5.33-5.82,1.61-1.98,3.1-3.96,4.33-5.94,2.85-3.96,5.2-8.3,7.18-12.75.62-1.49,1.24-2.97,1.73-4.46.62-1.86,1.24-3.71,1.86-5.45,2.36-7.43,3.59-15.35,3.59-23.53,0-45.31-36.77-82.08-82.08-82.08s-82.08,36.77-82.08,82.08c0,1.24.25,2.48.25,3.71.12,1.49.25,2.97.37,4.58.25,1.98.37,3.96.74,5.94.62,3.47,1.36,6.81,2.35,10.03.74,2.6,1.73,5.2,2.73,7.67,8.41,19.69,24.14,35.41,43.7,43.58,2.48,1.12,4.95,1.98,7.56,2.85,3.96,1.36,8.05,2.23,12.13,2.72.62.12,1.12.25,1.73.25-3.46,2.6-6.31,5.32-9.04,8.67l4.7,4.09c5.08-5.94,11.27-9.91,17.95-12.13,4.83-1.61,9.9-2.35,15.23-1.98,4.46.12,9.04,1.11,13.62,2.72,5.69,2.1,11.14,4.58,16.22,7.92l14.85,9.29,10.9,6.44c7.55,3.84,15.84,5.32,24.27,4.09,12.63-1.86,22.03-10.03,28.23-20.92,2.23-3.96,3.97-8.05,5.57-12.38l.12-.5c0-.12-.37-.12-.5-.12ZM726.25,154.39c-39.49,0-71.68-32.44-71.68-72.3,0-32.44,21.3-60.04,50.39-69.21,1.73-.5,3.46-.99,5.32-1.36.25-.12.5-.12.74-.12,1.36-.37,2.73-.62,4.21-.74.13-.12.37-.12.5-.12h.25c3.34-.62,6.81-.87,10.28-.87,2.23,0,4.33.12,6.44.37,2.1.12,4.21.37,6.32.86,2.1.25,4.08.74,6.06,1.36,1.49.37,2.97.74,4.46,1.36,1.49.49,3.1,1.11,4.58,1.73,25.75,11.02,43.83,36.77,43.83,66.73,0,39.87-32.19,72.3-71.68,72.3Z"/>
+            <polygon points="355.85 4.46 349.55 4.46 273.75 158.17 282.71 162.44 298.45 130.61 303.29 121.11 352.22 20.62 353.18 20.62 402.11 121.11 406.95 130.61 422.69 162.44 431.65 158.17 355.85 4.46"/>
+            <path d="M622.02,68.23c0-34.56-28.09-63.78-62.73-63.78h-93v157.74h10.17v-27.66h-.01v-17.83h.01V14.19h83.07c28.58,0,52.07,24.83,52.07,54.04s-23.49,53.31-52.32,53.31h-59.03v9.73h59.27c2.67,0,5.33-.24,7.99-.49l34.92,32.29,6.5-6.73-30.03-28.23c24.95-8.03,43.11-31.89,43.11-59.89Z"/>
+            <path d="M82.11,156.15c-39.48,0-71.69-32.45-71.69-72.41S42.63,11.33,82.11,11.33c29.07,0,54.14,17.62,65.37,42.85h11.14C146.72,23.48,116.96,1.63,82.11,1.63,36.82,1.63,0,38.45,0,83.74s36.82,82.09,82.11,82.09c34.26,0,63.64-21.09,75.93-50.96h-11.31c-11.56,24.38-36.17,41.28-64.62,41.28Z"/>
+            <path d="M171.27,144.19c-4.97,0-9,4.03-9,9s4.03,9,9,9,9-4.03,9-9-4.03-9-9-9Z"/>
+          </g>
+        </svg>
+      </template>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

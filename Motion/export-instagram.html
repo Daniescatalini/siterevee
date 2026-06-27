@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exportar C.ARQ para Instagram</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --olive: #65695a;
+        --white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100svh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        background: var(--olive);
+        color: var(--white);
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        overflow: hidden;
+      }
+
+      canvas {
+        height: 100svh;
+        aspect-ratio: 9 / 16;
+        display: block;
+        background: var(--olive);
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      button {
+        min-height: 42px;
+        padding: 0 18px;
+        border: 1px solid rgb(255 255 255 / 0.45);
+        border-radius: 999px;
+        color: var(--white);
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      button:hover,
+      button:focus-visible {
+        border-color: rgb(255 255 255 / 0.82);
+        outline: none;
+      }
+
+      .status {
+        min-height: 18px;
+        color: rgb(255 255 255 / 0.72);
+        font-size: 13px;
+      }
+
+      .controls,
+      .status {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="1080" height="1920" aria-label="Preview vertical C.ARQ"></canvas>
+    <div class="controls">
+      <button id="preview" type="button">Preview</button>
+      <button id="export" type="button">Exportar MP4</button>
+    </div>
+    <div class="status" id="status">MP4 vertical: 1080 x 1920, 30 fps, 7.2s.</div>
+    <script src="export-instagram.js"></script>
+  </body>
+</html>

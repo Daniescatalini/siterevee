@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Aplicação para projetos e consultoria estratégica com a Revee Brand." />
+    <meta name="theme-color" content="#000000" />
+    <title>Aplicação | Revee Brand</title>
+    <link rel="icon" href="assets/favcoin.jpg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="application-body">
+    <header class="site-header">
+      <a class="brand-mark" href="index.html" aria-label="Revee Brand"><img src="assets/logo-horizontal-black.png" alt="Revee Brand" /></a>
+      <button class="glass-menu-button" type="button" aria-expanded="false" aria-controls="siteMenu"><span class="menu-dot"></span><span>Menu</span></button>
+      <a class="contact-pill" href="index.html">Voltar ao site</a>
+    </header>
+    <nav class="glass-menu" id="siteMenu" aria-label="Menu principal">
+      <div class="glass-menu-top"><span>Revee Brand</span></div>
+      <a href="index.html"><span>Início</span></a>
+      <a href="services.html"><span>Serviços</span></a>
+      <a href="cases.html"><span>Portfólio</span></a>
+      <a href="culture.html"><span>Cultura</span></a>
+      <a href="about.html"><span>Sobre</span></a>
+    </nav>
+    <main class="application-page">
+      <section class="application-flow" data-application-flow>
+        <div class="application-progress" aria-hidden="true">
+          <span data-application-counter>00 / 09</span>
+          <i><em data-application-progress></em></i>
+        </div>
+
+        <form class="application-form" id="projectApplicationForm" novalidate>
+          <section class="application-step is-active" data-step="0">
+            <span class="section-label">Aplicação estratégica</span>
+            <h1>Antes de construirmos uma marca, precisamos entender o negócio.</h1>
+            <p>Cada projeto começa com uma conversa estratégica. Responda algumas perguntas para avaliarmos se a Revee é a parceira certa para este momento da sua empresa.</p>
+            <button class="application-next primary-action" type="button">Iniciar</button>
+          </section>
+
+          <fieldset class="application-step" data-step="1">
+            <span class="section-label">Etapa 01 · Sobre a empresa</span>
+            <h2>Começamos pelo contexto.</h2>
+            <div class="application-fields">
+              <label>Nome da empresa<input name="company_name" type="text" required autocomplete="organization" /></label>
+              <label>Site<input name="website" type="text" required placeholder="reveebrand.com ou @marca" /></label>
+              <label>Instagram<input name="instagram" type="text" required placeholder="@marca" /></label>
+              <label>Segmento<input name="segment" type="text" required /></label>
+            </div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="2">
+            <span class="section-label">Etapa 02 · Momento do negócio</span>
+            <h2>Qual situação descreve melhor sua empresa?</h2>
+            <div class="application-options">
+              <label><input name="business_stage" type="radio" value="Estou começando." required /><span>Estou começando.</span></label>
+              <label><input name="business_stage" type="radio" value="Tenho um negócio validado." /><span>Tenho um negócio validado.</span></label>
+              <label><input name="business_stage" type="radio" value="Quero reposicionar minha marca." /><span>Quero reposicionar minha marca.</span></label>
+              <label><input name="business_stage" type="radio" value="Estou expandindo." /><span>Estou expandindo.</span></label>
+              <label><input name="business_stage" type="radio" value="Minha marca não acompanha o crescimento." /><span>Minha marca não acompanha o crescimento.</span></label>
+            </div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="3">
+            <span class="section-label">Etapa 03 · Desafio principal</span>
+            <h2>O principal desafio hoje é:</h2>
+            <p>Selecione uma ou mais opções.</p>
+            <div class="application-options" data-required-group="main_challenge">
+              <label><input name="main_challenge" type="checkbox" value="Minha marca não transmite valor." /><span>Minha marca não transmite valor.</span></label>
+              <label><input name="main_challenge" type="checkbox" value="Tenho dificuldade em cobrar mais." /><span>Tenho dificuldade em cobrar mais.</span></label>
+              <label><input name="main_challenge" type="checkbox" value="Não consigo me diferenciar." /><span>Não consigo me diferenciar.</span></label>
+              <label><input name="main_challenge" type="checkbox" value="Preciso organizar minha comunicação." /><span>Preciso organizar minha comunicação.</span></label>
+              <label><input name="main_challenge" type="checkbox" value="Meu site não representa meu negócio." /><span>Meu site não representa meu negócio.</span></label>
+              <label><input name="main_challenge" type="checkbox" value="Outro." /><span>Outro.</span></label>
+            </div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="4">
+            <span class="section-label">Etapa 04 · Objetivo</span>
+            <h2>O que você espera transformar?</h2>
+            <label class="application-wide">
+              <textarea name="desired_transformation" required rows="7" placeholder="Conte o que precisa mudar na marca, na percepção ou no crescimento da empresa."></textarea>
+            </label>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="5">
+            <span class="section-label">Etapa 05 · Direção</span>
+            <h2>Como você acredita que a Revee pode ajudar sua marca?</h2>
+            <p>Selecione uma ou mais opções que se aproximam do que você procura.</p>
+            <div class="application-options" data-required-group="project_need">
+              <label><input name="project_need" type="checkbox" value="Estratégia de Marca e Posicionamento" /><span>Estratégia de Marca e Posicionamento</span></label>
+              <label><input name="project_need" type="checkbox" value="Branding e Identidade Visual" /><span>Branding e Identidade Visual</span></label>
+              <label><input name="project_need" type="checkbox" value="Naming" /><span>Naming</span></label>
+              <label><input name="project_need" type="checkbox" value="Website" /><span>Website</span></label>
+              <label><input name="project_need" type="checkbox" value="Direção Criativa" /><span>Direção Criativa</span></label>
+              <label><input name="project_need" type="checkbox" value="Consultoria Estratégica" /><span>Consultoria Estratégica</span></label>
+              <label><input name="project_need" type="checkbox" value="Inteligência Artificial para Marcas" /><span>Inteligência Artificial para Marcas</span></label>
+              <label><input name="project_need" type="checkbox" value="Ainda não sei. Preciso de orientação." /><span>Ainda não sei. Preciso de orientação.</span></label>
+            </div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="6">
+            <span class="section-label">Etapa 06 · Investimento</span>
+            <h2>Qual faixa você pretende investir?</h2>
+            <div class="application-options">
+              <label><input name="investment_range" type="radio" value="R$20.000–40.000" required /><span>R$20.000–40.000</span></label>
+              <label><input name="investment_range" type="radio" value="R$40.000–80.000" /><span>R$40.000–80.000</span></label>
+              <label><input name="investment_range" type="radio" value="R$80.000–150.000" /><span>R$80.000–150.000</span></label>
+              <label><input name="investment_range" type="radio" value="acima de R$150.000" /><span>acima de R$150.000</span></label>
+            </div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="7">
+            <span class="section-label">Etapa 07 · Prazo</span>
+            <h2>Quando pretende iniciar?</h2>
+            <div class="application-options">
+              <label><input name="start_timeline" type="radio" value="imediatamente" required /><span>imediatamente</span></label>
+              <label><input name="start_timeline" type="radio" value="30 dias" /><span>30 dias</span></label>
+              <label><input name="start_timeline" type="radio" value="60 dias" /><span>60 dias</span></label>
+              <label><input name="start_timeline" type="radio" value="apenas pesquisando" /><span>apenas pesquisando</span></label>
+            </div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="8">
+            <span class="section-label">Etapa 08 · Origem</span>
+            <h2>Como conheceu a Revee?</h2>
+            <div class="application-options">
+              <label><input name="source" type="radio" value="Instagram" required /><span>Instagram</span></label>
+              <label><input name="source" type="radio" value="Google" /><span>Google</span></label>
+              <label><input name="source" type="radio" value="Indicação" /><span>Indicação</span></label>
+              <label><input name="source" type="radio" value="LinkedIn" /><span>LinkedIn</span></label>
+              <label><input name="source" type="radio" value="TikTok" /><span>TikTok</span></label>
+              <label><input name="source" type="radio" value="Evento" /><span>Evento</span></label>
+              <label><input name="source" type="radio" value="IA Revee" /><span>IA Revee</span></label>
+              <label><input name="source" type="radio" value="Outro" /><span>Outro</span></label>
+            </div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="application-next primary-action" type="button">Continuar</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="application-step" data-step="9">
+            <span class="section-label">Etapa 09 · Dados finais</span>
+            <h2>Agora queremos conhecer você.</h2>
+            <div class="application-fields">
+              <label>Nome<input name="name" type="text" required autocomplete="name" /></label>
+              <label>E-mail<input name="email" type="email" required autocomplete="email" /></label>
+              <label>WhatsApp<input name="whatsapp" type="tel" required autocomplete="tel" /></label>
+              <label>Cidade<input name="city" type="text" required autocomplete="address-level2" /></label>
+            </div>
+            <label class="application-wide">
+              <span>Mensagem complementar</span>
+              <textarea name="message" required rows="5" placeholder="Inclua qualquer contexto importante sobre a empresa ou o projeto."></textarea>
+            </label>
+            <div class="application-error" data-application-error></div>
+            <div class="application-actions">
+              <button class="application-prev secondary-action" type="button">Voltar</button>
+              <button class="primary-action" type="submit">Enviar aplicação</button>
+            </div>
+          </fieldset>
+
+          <section class="application-step application-success" data-step="success" aria-live="polite">
+            <span class="section-label">Aplicação recebida</span>
+            <h2>Muito obrigado.</h2>
+            <p>Recebemos sua aplicação. Nossa equipe analisará as informações e retornará em até 48 horas caso exista aderência entre o momento da sua marca e a forma como trabalhamos.</p>
+            <a class="secondary-action" href="index.html">Voltar ao início</a>
+          </section>
+        </form>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
