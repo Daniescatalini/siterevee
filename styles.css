@@ -6832,6 +6832,70 @@ textarea:focus-visible {
   color: #fff;
 }
 
+.seo-faq {
+  padding: var(--section-space) var(--pad);
+  border-top: 1px solid var(--line-soft);
+  background: #000;
+}
+
+.seo-faq > h2 {
+  max-width: 820px;
+  margin-top: 3rem;
+  font-size: var(--display-lg);
+  line-height: 1.02;
+}
+
+.seo-faq-list {
+  margin-top: 4rem;
+  border-top: 1px solid var(--line);
+}
+
+.seo-faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.seo-faq summary {
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  cursor: pointer;
+  color: var(--white);
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  list-style: none;
+}
+
+.seo-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.seo-faq summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.seo-faq details[open] summary::after {
+  content: "−";
+}
+
+.seo-faq details p {
+  max-width: 760px;
+  padding: 0 0 32px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+@media (max-width: 620px) {
+  .seo-faq summary {
+    min-height: 76px;
+    font-size: 1.1rem;
+  }
+}
+
 .about-revee .institution-copy h1 {
   max-width: 1160px;
   margin-top: 3.5rem;

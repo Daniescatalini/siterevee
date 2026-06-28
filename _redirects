@@ -1,0 +1,16 @@
+/services.html                 /servicos                          301!
+/servicos                      /services.html                     200
+/cases.html                    /portfolio                         301!
+/portfolio                     /cases.html                        200
+/culture.html                  /cultura                           301!
+/cultura                       /culture.html                      200
+/about.html                    /sobre                             301!
+/sobre                         /about.html                        200
+/contact.html                  /aplicar                           301!
+/aplicar                       /contact.html                      200
+/case-carq.html                /projetos/c-arq                    301!
+/projetos/c-arq                /case-carq.html                    200
+/case-beleza-wellness.html     /projetos/beleza-wellness         301!
+/projetos/beleza-wellness      /case-beleza-wellness.html        200
+/case-cavalicarvalho.html      /projetos/cavali-carvalho         301!
+/projetos/cavali-carvalho      /case-cavalicarvalho.html         200
