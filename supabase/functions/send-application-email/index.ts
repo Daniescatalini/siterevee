@@ -2,27 +2,6 @@ const RESEND_API_URL = "https://api.resend.com/emails";
 
 type Application = Record<string, string>;
 
-const labels: Record<string, string> = {
-  name: "Nome",
-  email: "E-mail",
-  whatsapp: "WhatsApp",
-  city: "Cidade",
-  company_name: "Empresa",
-  instagram: "Instagram",
-  website: "Site",
-  segment: "Segmento",
-  business_stage: "Momento do negócio",
-  main_challenge: "Principal desafio",
-  desired_transformation: "Transformação desejada",
-  project_need: "Como a Revee pode ajudar",
-  investment_range: "Faixa de investimento",
-  start_timeline: "Prazo para iniciar",
-  message: "Mensagem complementar",
-  source: "Como conheceu a Revee",
-  created_at: "Enviado em",
-  id: "ID"
-};
-
 function escapeHtml(value: unknown) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -32,18 +11,19 @@ function escapeHtml(value: unknown) {
     .replaceAll("'", "&#039;");
 }
 
-function renderRows(application: Application) {
-  return Object.keys(labels)
-    .filter((key) => application[key])
-    .map((key) => {
-      return `
-        <tr>
-          <td style="padding:14px 16px;border-bottom:1px solid #242424;color:#8f8f8f;font-size:13px;text-transform:uppercase;letter-spacing:.08em;width:34%;">${labels[key]}</td>
-          <td style="padding:14px 16px;border-bottom:1px solid #242424;color:#f5f5f0;font-size:15px;line-height:1.5;">${escapeHtml(application[key])}</td>
-        </tr>
-      `;
-    })
-    .join("");
+function detail(label: string, value: unknown) {
+  return `<div style="padding:0 0 18px;"><div style="margin-bottom:5px;color:#777;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;">${escapeHtml(label)}</div><div style="color:#111;font-size:16px;line-height:1.45;">${escapeHtml(value || "Não informado")}</div></div>`;
+}
+
+function list(value: string) {
+  const items = String(value || "").split("|").map((item) => item.trim()).filter(Boolean);
+  return items.length
+    ? `<ul style="margin:0;padding:0;list-style:none;">${items.map((item) => `<li style="margin:0 0 9px;padding-left:18px;position:relative;color:#111;font-size:16px;line-height:1.45;"><span style="position:absolute;left:0;">•</span>${escapeHtml(item)}</li>`).join("")}</ul>`
+    : `<p style="margin:0;color:#777;">Não informado</p>`;
+}
+
+function section(title: string, content: string) {
+  return `<section style="padding:26px 0;border-top:1px solid #e7e7e4;"><h2 style="margin:0 0 20px;color:#111;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;">${escapeHtml(title)}</h2>${content}</section>`;
 }
 
 Deno.serve(async (request) => {
@@ -66,50 +46,101 @@ Deno.serve(async (request) => {
   }
 
   const application = await request.json();
-  const subject = `Nova aplicação de projeto: ${application.company_name || application.name || "Revee Brand"}`;
+  const subject = "🚀 Nova aplicação — Revee Brand";
 
   const html = `
-    <div style="margin:0;padding:32px;background:#050505;font-family:Arial,Helvetica,sans-serif;color:#f5f5f0;">
-      <div style="max-width:760px;margin:0 auto;">
-        <p style="margin:0 0 10px;color:#8f8f8f;font-size:12px;text-transform:uppercase;letter-spacing:.18em;">Revee Brand</p>
-        <h1 style="margin:0 0 24px;font-size:34px;line-height:1.05;font-weight:400;">Nova aplicação de projeto</h1>
-        <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;background:#101010;border:1px solid #242424;">
-          ${renderRows(application)}
-        </table>
+    <div style="margin:0;padding:40px 20px;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#111;">
+      <div style="max-width:720px;margin:0 auto;padding:44px;background:#fff;border:1px solid #e4e4e1;">
+        <p style="margin:0 0 12px;color:#777;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;">Revee Brand</p>
+        <h1 style="margin:0 0 36px;font-size:36px;line-height:1.08;font-weight:400;">Nova aplicação</h1>
+        ${section("Dados", `
+          <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:32px;">
+            <div>${detail("Nome", application.name)}${detail("Empresa", application.company_name)}${detail("Cidade", application.city)}</div>
+            <div>${detail("WhatsApp", application.whatsapp)}${detail("E-mail", application.email)}${detail("Instagram/Site", application.instagram_website)}</div>
+          </div>
+        `)}
+        ${section("Diagnóstico", detail("Estágio da empresa", application.business_stage))}
+        ${section("Principais desafios", list(application.main_challenges))}
+        ${section("Áreas de apoio", list(application.services_needed))}
+        ${section("Transformação desejada", `<p style="margin:0;color:#111;font-size:17px;line-height:1.65;">${escapeHtml(application.desired_transformation)}</p>`)}
+        ${section("Projeto", `${detail("Investimento", application.investment_range)}${detail("Prazo", application.start_timeline)}${detail("Origem", application.source)}`)}
+        <p style="margin:28px 0 0;color:#999;font-size:11px;line-height:1.5;">Enviado pelo formulário de projetos da Revee Brand.</p>
       </div>
     </div>
   `;
 
-  const text = Object.keys(labels)
-    .filter((key) => application[key])
-    .map((key) => `${labels[key]}: ${application[key]}`)
-    .join("\n");
+  const text = [
+    "NOVA APLICAÇÃO — REVEE BRAND",
+    "",
+    `Nome: ${application.name}`,
+    `Empresa: ${application.company_name}`,
+    `Cidade: ${application.city}`,
+    `WhatsApp: ${application.whatsapp}`,
+    `E-mail: ${application.email}`,
+    `Instagram/Site: ${application.instagram_website || "Não informado"}`,
+    "",
+    `Estágio: ${application.business_stage}`,
+    `Principais desafios: ${application.main_challenges}`,
+    `Áreas de apoio: ${application.services_needed}`,
+    `Transformação desejada: ${application.desired_transformation}`,
+    `Investimento: ${application.investment_range}`,
+    `Prazo: ${application.start_timeline}`,
+    `Origem: ${application.source}`
+  ].join("\n");
 
-  const resendResponse = await fetch(RESEND_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${resendApiKey}`
-    },
-    body: JSON.stringify({
+  const customerHtml = `
+    <div style="margin:0;padding:40px 20px;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#111;">
+      <div style="max-width:680px;margin:0 auto;padding:48px;background:#fff;border:1px solid #e4e4e1;">
+        <p style="margin:0 0 12px;color:#777;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;">Revee Brand</p>
+        <h1 style="margin:0 0 32px;font-size:36px;line-height:1.1;font-weight:400;">Sua aplicação foi recebida.</h1>
+        <p style="margin:0 0 18px;font-size:17px;line-height:1.7;">Olá, ${escapeHtml(application.name)}.</p>
+        <p style="margin:0 0 18px;font-size:17px;line-height:1.7;">Obrigado por compartilhar um pouco sobre a sua marca.</p>
+        <p style="margin:0 0 18px;font-size:17px;line-height:1.7;">A partir das informações enviadas, iniciaremos uma análise inicial para compreender seu momento, seus desafios e como podemos contribuir de forma estratégica.</p>
+        <p style="margin:0 0 32px;font-size:17px;line-height:1.7;">Você receberá um retorno em até 1 dia útil com os próximos passos.</p>
+        <p style="margin:0 0 24px;font-size:17px;line-height:1.7;">Enquanto isso, convidamos você a conhecer um pouco mais sobre o nosso trabalho.</p>
+        <div style="margin:0 0 42px;">
+          <a href="https://reveebrand.com/projetos" style="display:inline-block;margin:0 10px 10px 0;padding:14px 20px;border-radius:4px;background:#050505;color:#fff;text-decoration:none;font-size:14px;font-weight:700;">Conhecer nossos projetos</a>
+          <a href="https://reveebrand.com/metodo" style="display:inline-block;margin:0 0 10px;padding:14px 20px;border-radius:4px;background:#050505;color:#fff;text-decoration:none;font-size:14px;font-weight:700;">Conhecer nosso método</a>
+        </div>
+        <div style="padding-top:28px;border-top:1px solid #e7e7e4;color:#666;font-size:13px;line-height:1.7;">
+          <p style="margin:0 0 22px;">Cada projeto desenvolvido pela Revee é construído de forma personalizada. Por isso, analisamos cuidadosamente cada aplicação antes de iniciar uma nova parceria.</p>
+          <p style="margin:0;color:#111;font-weight:700;">Revee Brand</p>
+          <p style="margin:4px 0 0;">Marcas com significado. Estruturadas para crescer.</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const send = async (payload: Record<string, unknown>, label: string) => {
+    try {
+      const response = await fetch(RESEND_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendApiKey}` },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        console.error(`${label} email failed`, await response.text());
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error(`${label} email connection failed`, error);
+      return false;
+    }
+  };
+
+  const [adminSent, customerSent] = await Promise.all([
+    send({ from: fromEmail, to: [toEmail], subject, html, text }, "Admin"),
+    send({
       from: fromEmail,
-      to: [toEmail],
-      subject,
-      html,
-      text
-    })
-  });
+      to: [application.email],
+      subject: "Recebemos sua aplicação. Obrigado por escolher a Revee.",
+      html: customerHtml,
+      text: `Olá, ${application.name}.\n\nObrigado por compartilhar um pouco sobre a sua marca. A partir das informações enviadas, iniciaremos uma análise inicial para compreender seu momento, seus desafios e como podemos contribuir de forma estratégica.\n\nVocê receberá um retorno em até 1 dia útil com os próximos passos.\n\nProjetos: https://reveebrand.com/projetos\nMétodo: https://reveebrand.com/metodo\n\nRevee Brand\nMarcas com significado. Estruturadas para crescer.`
+    }, "Customer")
+  ]);
 
-  if (!resendResponse.ok) {
-    const errorText = await resendResponse.text();
-    return new Response(JSON.stringify({ error: "Resend request failed", detail: errorText }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
-  }
-
-  const data = await resendResponse.json();
-  return new Response(JSON.stringify({ ok: true, data }), {
+  return new Response(JSON.stringify({ ok: true, adminSent, customerSent }), {
     status: 200,
     headers: { "Content-Type": "application/json" }
   });

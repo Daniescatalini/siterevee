@@ -4,16 +4,12 @@ const requiredFields = [
   "whatsapp",
   "city",
   "company_name",
-  "instagram",
-  "website",
-  "segment",
   "business_stage",
-  "main_challenge",
+  "main_challenges",
+  "services_needed",
   "desired_transformation",
-  "project_need",
   "investment_range",
   "start_timeline",
-  "message",
   "source"
 ];
 
@@ -28,8 +24,8 @@ exports.handler = async (event) => {
     return json(405, { error: "Method not allowed" });
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     return json(500, { error: "Supabase environment variables are missing" });
@@ -46,6 +42,7 @@ exports.handler = async (event) => {
     acc[field] = String(payload[field] || "").trim();
     return acc;
   }, {});
+  application.instagram_website = String(payload.instagram_website || "").trim();
 
   const missingField = requiredFields.find((field) => !application[field]);
   if (missingField) {
@@ -56,21 +53,28 @@ exports.handler = async (event) => {
     return json(422, { error: "Invalid email" });
   }
 
-  const oversizedField = requiredFields.find((field) => application[field].length > (field === "message" || field === "desired_transformation" ? 5000 : 500));
+  const fieldsToCheck = [...requiredFields, "instagram_website"];
+  const oversizedField = fieldsToCheck.find((field) => application[field].length > (field === "desired_transformation" ? 5000 : 500));
   if (oversizedField) {
     return json(422, { error: `Field is too long: ${oversizedField}` });
   }
 
-  const insertResponse = await fetch(`${supabaseUrl}/rest/v1/project_applications`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: supabaseServiceRoleKey,
-      Authorization: `Bearer ${supabaseServiceRoleKey}`,
-      Prefer: "return=representation"
-    },
-    body: JSON.stringify(application)
-  });
+  let insertResponse;
+  try {
+    insertResponse = await fetch(`${supabaseUrl.replace(/\/$/, "")}/rest/v1/project_applications`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: supabaseServiceRoleKey,
+        Authorization: `Bearer ${supabaseServiceRoleKey}`,
+        Prefer: "return=representation"
+      },
+      body: JSON.stringify(application)
+    });
+  } catch (error) {
+    console.error("Supabase insert connection failed", error);
+    return json(502, { error: "Could not connect to application storage" });
+  }
 
   if (!insertResponse.ok) {
     const errorText = await insertResponse.text();
@@ -79,19 +83,23 @@ exports.handler = async (event) => {
 
   const [savedApplication] = await insertResponse.json();
 
-  const emailResponse = await fetch(`${supabaseUrl}/functions/v1/send-application-email`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${supabaseServiceRoleKey}`
-    },
-    body: JSON.stringify(savedApplication)
-  });
-
-  if (!emailResponse.ok) {
-    const errorText = await emailResponse.text();
-    return json(500, { error: "Could not send application email", detail: errorText });
+  let emailSent = false;
+  try {
+    const emailResponse = await fetch(`${supabaseUrl.replace(/\/$/, "")}/functions/v1/send-application-email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: supabaseServiceRoleKey,
+        Authorization: `Bearer ${supabaseServiceRoleKey}`
+      },
+      body: JSON.stringify(savedApplication)
+    });
+    emailSent = emailResponse.ok;
+    if (!emailSent) console.error("Application email failed", await emailResponse.text());
+  } catch (error) {
+    console.error("Application email connection failed", error);
   }
 
-  return json(200, { ok: true, id: savedApplication.id });
+  // The application is safely stored even if the notification email is delayed.
+  return json(200, { ok: true, id: savedApplication.id, emailSent });
 };

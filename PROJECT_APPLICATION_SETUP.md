@@ -2,10 +2,11 @@
 
 ## Supabase
 
-1. Rode a migration:
+1. Rode as migrations, em ordem:
 
 ```sql
 supabase/migrations/001_create_project_applications.sql
+supabase/migrations/002_simplify_project_application.sql
 ```
 
 2. Publique a Edge Function:
@@ -14,12 +15,12 @@ supabase/migrations/001_create_project_applications.sql
 supabase functions deploy send-application-email
 ```
 
-3. Configure os secrets da Edge Function:
+3. Configure os secrets da Edge Function. Para enviar ao cliente, o remetente precisa pertencer a um domínio verificado no Resend:
 
 ```bash
 supabase secrets set RESEND_API_KEY="sua-chave-resend"
 supabase secrets set APPLICATION_TO_EMAIL="reveebrand@gmail.com"
-supabase secrets set RESEND_FROM_EMAIL="Revee Brand <email@seudominio.com>"
+supabase secrets set RESEND_FROM_EMAIL="Revee Brand <contato@reveebrand.com>"
 ```
 
 ## Netlify
@@ -31,7 +32,9 @@ SUPABASE_URL="https://seu-projeto.supabase.co"
 SUPABASE_SERVICE_ROLE_KEY="sua-service-role-key"
 ```
 
+Depois de salvar as variáveis, faça um novo deploy em **Deploys > Trigger deploy > Clear cache and deploy site**.
+
 O front-end envia a aplicação para `/.netlify/functions/submit-application`.
-A Function da Netlify salva no Supabase e chama a Edge Function `send-application-email`.
+A Function da Netlify salva primeiro no Supabase e só então chama a Edge Function `send-application-email`. O lead permanece salvo e o formulário retorna sucesso mesmo se algum e-mail falhar.
 
 Nenhuma chave sensível fica exposta no navegador.

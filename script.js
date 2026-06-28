@@ -191,8 +191,11 @@ if (applicationForm && applicationSteps.length) {
 
   const showApplicationSuccess = () => {
     applicationSteps.forEach((step) => step.classList.toggle("is-active", step.dataset.step === "success"));
-    if (applicationCounter) applicationCounter.textContent = "09 / 09";
+    if (applicationCounter) {
+      applicationCounter.textContent = `${String(totalApplicationSteps).padStart(2, "0")} / ${String(totalApplicationSteps).padStart(2, "0")}`;
+    }
     if (applicationProgress) applicationProgress.style.width = "100%";
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   };
 
   const getCurrentApplicationPanel = () => applicationSteps.find((step) => Number(step.dataset.step) === currentApplicationStep);
@@ -243,6 +246,13 @@ if (applicationForm && applicationSteps.length) {
     });
   });
 
+  applicationForm.querySelectorAll("input, textarea").forEach((field) => {
+    field.addEventListener("input", () => {
+      if (field.checkValidity()) field.closest(".application-step")?.classList.remove("has-error");
+      if (applicationError) applicationError.textContent = "";
+    });
+  });
+
   applicationForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -257,8 +267,8 @@ if (applicationForm && applicationSteps.length) {
     const submitButton = applicationForm.querySelector('button[type="submit"]');
     const formData = new FormData(applicationForm);
     const payload = Object.fromEntries(formData.entries());
-    payload.main_challenge = formData.getAll("main_challenge").join(", ");
-    payload.project_need = formData.getAll("project_need").join(", ");
+    payload.main_challenges = formData.getAll("main_challenges").join(" | ");
+    payload.services_needed = formData.getAll("services_needed").join(" | ");
     if (submitButton) {
       submitButton.disabled = true;
       submitButton.textContent = "Enviando...";
@@ -282,7 +292,7 @@ if (applicationForm && applicationSteps.length) {
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
-        submitButton.textContent = "Enviar aplicação";
+        submitButton.textContent = "Finalizar aplicação";
       }
     }
   });
@@ -923,61 +933,111 @@ if (earthCanvas) {
 }
 
 const aiAnswers = {
-  position:
-    "Uma hipótese provável é desalinhamento entre promessa, percepção e mercado. Isso costuma aparecer quando a marca precisa explicar demais, disputa por preço ou não consegue ser lembrada por uma ideia clara. Antes de mudar a comunicação, vale investigar: quem compra hoje, por que escolhe você e qual percepção deveria permanecer depois do primeiro contato.",
-  value:
-    "Valor percebido não nasce do que a empresa entrega, mas da forma como essa entrega é compreendida. Linguagem, prova, experiência, autoridade, ritmo visual e consistência precisam sustentar a mesma percepção. A pergunta central é: o mercado entende valor ou apenas compara preço?",
-  sales:
-    "Quando as vendas não crescem, nem sempre o problema está em tráfego ou oferta. Um padrão comum é marca, marketing e experiência contando histórias diferentes. Antes de aumentar volume, vale revisar clareza de posicionamento, confiança percebida e jornada de decisão.",
-  identity:
-    "Trocar identidade visual antes de entender posicionamento costuma tratar o sintoma, não a causa. Design é consequência. Primeiro investigamos significado, público, mercado, promessa e percepção desejada. Depois a forma visual pode nascer com mais precisão."
+  position: { title: "Posicionamento é uma decisão de percepção.", body: "Quando a marca precisa explicar demais, disputa por preço ou não é lembrada por uma ideia clara, existe um provável desalinhamento entre promessa, percepção e mercado." },
+  value: { title: "Valor precisa ser percebido antes de ser comparado.", body: "Linguagem, prova, experiência e consistência devem sustentar a mesma leitura. Quando isso não acontece, o cliente enxerga custo antes de compreender valor." },
+  sales: { title: "Crescimento não é apenas uma questão de alcance.", body: "Marca, oferta, comunicação e experiência precisam contar a mesma história. Aumentar volume sem organizar essas camadas tende a amplificar a falta de clareza." },
+  identity: { title: "Identidade visual é consequência de estratégia.", body: "Mudar logo, cor ou tipografia antes de definir posicionamento costuma tratar o sintoma. Primeiro vem a percepção desejada; depois, a forma capaz de sustentá-la." }
 };
 
 const aiOutput = document.querySelector("#aiOutput");
 const aiForm = document.querySelector(".ai-chat-input");
 const aiInput = aiForm?.querySelector("input");
+const aiPrompts = document.querySelector(".ai-chat-prompts");
+const aiConversation = { profile: {}, asked: new Set(), lastQuestion: null };
 
-function appendAiMessage(role, text) {
+function appendAiMessage(role, content) {
   if (!aiOutput) return null;
-  const message = document.createElement("p");
+  const message = document.createElement("div");
   message.className = `ai-message ai-message-${role}`;
-  message.textContent = text;
+  if (typeof content === "string") {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = content;
+    message.append(paragraph);
+  } else {
+    if (content.kicker) {
+      const kicker = document.createElement("span");
+      kicker.className = "ai-message-kicker";
+      kicker.textContent = content.kicker;
+      message.append(kicker);
+    }
+    if (content.title) {
+      const title = document.createElement("strong");
+      title.className = "ai-message-title";
+      title.textContent = content.title;
+      message.append(title);
+    }
+    [content.body, content.question].filter(Boolean).forEach((text) => {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = text;
+      message.append(paragraph);
+    });
+  }
   aiOutput.append(message);
   aiOutput.scrollTop = aiOutput.scrollHeight;
   return message;
 }
 
-function buildStrategicReply(message) {
+function registerConversationSignals(message) {
   const text = message.toLowerCase();
-  const questions = "Para analisar melhor, eu começaria por três perguntas: qual é o segmento da empresa, como os clientes chegam hoje e o que você sente que o mercado ainda não percebe sobre a marca?";
+  if (aiConversation.lastQuestion) aiConversation.profile[aiConversation.lastQuestion] = message;
+  if (/roupa|moda|vestuário|loja|e-?commerce/.test(text)) aiConversation.profile.segment = message;
+  if (/instagram|google|indicação|loja física|site|whatsapp/.test(text)) aiConversation.profile.channel = message;
+  if (/preço|car[oa]|barat|valor|premium/.test(text)) aiConversation.profile.perception = message;
+  if (/crescer|nacional|vender|cliente|reposicionar|transformar/.test(text)) aiConversation.profile.objective = message;
+}
 
-  if (text.includes("preço") || text.includes("barato") || text.includes("valor")) {
-    return `Existe um sinal de percepção de valor. Isso normalmente acontece quando a marca comunica entrega, mas não constrói significado suficiente para justificar escolha. ${questions}`;
+function nextStrategicQuestion() {
+  const questions = [
+    ["segment", "Em qual segmento a empresa atua e o que ela oferece de mais relevante?"],
+    ["channel", "Hoje, por quais canais os clientes chegam até a marca?"],
+    ["perception", "O que você gostaria que o cliente percebesse antes de comparar preço?"],
+    ["objective", "Qual mudança de percepção teria maior impacto no crescimento da empresa agora?"]
+  ];
+  const next = questions.find(([key]) => !aiConversation.profile[key] && !aiConversation.asked.has(key));
+  if (!next) {
+    aiConversation.lastQuestion = null;
+    return "Com esse contexto, já é possível iniciar um diagnóstico mais preciso. Se desejar, continue contando detalhes ou inicie um projeto com a Revee.";
+  }
+  aiConversation.asked.add(next[0]);
+  aiConversation.lastQuestion = next[0];
+  return next[1];
+}
+
+function buildStrategicReply(message) {
+  registerConversationSignals(message);
+  const text = message.toLowerCase();
+  let title = "Existe um ponto estratégico a investigar.";
+  let body = "O sinal que você trouxe parece estar ligado à distância entre o que a empresa entrega e o que o mercado consegue perceber com clareza.";
+
+  if (/preço|car[oa]|barat|valor/.test(text)) {
+    title = "O problema parece ser percepção de valor.";
+    body = "Quando o cliente considera a oferta cara antes de compreender seus diferenciais, a marca ainda não tornou tangíveis a qualidade, a escolha e o significado da entrega.";
+  } else if (/instagram|conteúdo|post|social/.test(text)) {
+    title = "O Instagram é o canal, não necessariamente a causa.";
+    body = "Antes de aumentar frequência ou mudar estética, vale verificar se narrativa, posicionamento e prova constroem uma leitura consistente da marca.";
+  } else if (/logo|identidade|visual|design/.test(text)) {
+    title = "A identidade pode estar expressando uma estratégia insuficiente.";
+    body = "Uma mudança visual ganha força quando nasce de uma definição clara de público, promessa, território e percepção desejada.";
+  } else if (/venda|cliente|crescer|crescimento/.test(text)) {
+    title = "A marca pode estar limitando a conversão.";
+    body = "Quando posicionamento, oferta e experiência não sustentam a mesma promessa, crescer exige esforço demais e a decisão tende a voltar para preço.";
   }
 
-  if (text.includes("instagram") || text.includes("conteúdo") || text.includes("post") || text.includes("social")) {
-    return `O Instagram pode ser apenas a superfície do problema. Vale investigar se a narrativa, a estética e a frequência estão sustentando uma posição clara ou apenas ocupando espaço. ${questions}`;
-  }
-
-  if (text.includes("logo") || text.includes("identidade") || text.includes("visual") || text.includes("design")) {
-    return `A forma visual deve nascer de uma decisão estratégica. Antes de alterar logo, cores ou tipografia, vale entender qual percepção a marca precisa construir e quais sinais visuais hoje estão enfraquecendo essa leitura. ${questions}`;
-  }
-
-  if (text.includes("venda") || text.includes("cliente") || text.includes("crescer") || text.includes("crescimento")) {
-    return `Crescimento exige consistência entre posicionamento, oferta, experiência e comunicação. Quando uma dessas camadas não sustenta a outra, a marca pode até aparecer mais, mas não necessariamente se tornar mais desejada. ${questions}`;
-  }
-
-  return `Uma leitura inicial: esse tema precisa ser analisado pela causa, não apenas pelo sintoma. Na Revee, observamos primeiro significado, posicionamento, expressão e sistema. ${questions}`;
+  return { kicker: "Leitura inicial", title, body, question: nextStrategicQuestion() };
 }
 
 document.querySelectorAll("[data-answer]").forEach((button) => {
   button.addEventListener("click", async () => {
     const answer = aiAnswers[button.dataset.answer];
     if (!aiOutput || !answer) return;
+    aiPrompts?.classList.add("is-hidden");
     appendAiMessage("user", button.textContent.trim());
     const thinking = appendAiMessage("assistant", "Analisando o sinal...");
     await wait(360);
-    if (thinking) thinking.textContent = answer;
+    if (thinking) {
+      thinking.remove();
+      appendAiMessage("assistant", { kicker: "Leitura inicial", ...answer, question: nextStrategicQuestion() });
+    }
     aiOutput.scrollTop = aiOutput.scrollHeight;
   });
 });
@@ -987,10 +1047,14 @@ if (aiForm && aiOutput && aiInput) {
     event.preventDefault();
     const message = aiInput.value.trim();
     if (!message) return;
+    aiPrompts?.classList.add("is-hidden");
     appendAiMessage("user", message);
     const thinking = appendAiMessage("assistant", "Analisando o sinal por trás da pergunta...");
     await wait(420);
-    if (thinking) thinking.textContent = buildStrategicReply(message);
+    if (thinking) {
+      thinking.remove();
+      appendAiMessage("assistant", buildStrategicReply(message));
+    }
     aiInput.value = "";
     aiOutput.scrollTop = aiOutput.scrollHeight;
   });

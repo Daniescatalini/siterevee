@@ -12,15 +12,19 @@ const shared = (data) => `
     <meta property="og:description" content="${data.ogDescription || data.description}" />
     <meta property="og:url" content="${domain}${data.path}" />
     <meta property="og:site_name" content="Revee Brand" />
-    <meta property="og:image" content="${domain}/${data.image}" />
-    <meta property="og:image:alt" content="${data.imageAlt}" />
+    <meta property="og:image" content="${domain}/assets/seo/revee-brand-compartilhamento.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="3508" />
+    <meta property="og:image:height" content="2481" />
+    <meta property="og:image:alt" content="Logotipo da Revee Brand em fundo preto, agência de branding e estratégia de marca" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${data.title}" />
     <meta name="twitter:description" content="${data.ogDescription || data.description}" />
-    <meta name="twitter:image" content="${domain}/${data.image}" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="manifest" href="manifest.json" />
+    <meta name="twitter:image" content="${domain}/assets/seo/revee-brand-compartilhamento.png" />
+    <link rel="icon" type="image/x-icon" sizes="64x64" href="/favicon.ico?v=5" />
+    <link rel="shortcut icon" href="/favicon.ico?v=5" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
     <link rel="preload" href="assets/fonts/NeueMontreal-Regular.otf" as="font" type="font/otf" crossorigin />
     <link rel="preload" href="assets/fonts/Montserrat-Regular.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="stylesheet" href="styles.css" />`;
@@ -36,10 +40,10 @@ const breadcrumb = (name, path) => ({
 const pages = {
   "about.html": {
     title: "Sobre a Revee Brand | Consultoria de Branding em Piracicaba",
-    description: "Conheça a Revee Brand, consultoria de branding em Piracicaba com atuação global, direção criativa, estratégia de marca, tecnologia e crescimento.",
+    description: "Conheça a Revee Brand, agência de branding em Piracicaba com atuação global, direção criativa, estratégia de marca, tecnologia e crescimento.",
     path: "/sobre",
     image: "assets/seo/revee-brand-agencia-branding-piracicaba.webp",
-    imageAlt: "Daniela Escatalini e a estrutura estratégica da Revee Brand, consultoria de branding em Piracicaba",
+    imageAlt: "Daniela Escatalini e a estrutura estratégica da Revee Brand, agência de branding em Piracicaba",
     schema: {
       "@context": "https://schema.org",
       "@graph": [
@@ -49,7 +53,7 @@ const pages = {
     },
   },
   "contact.html": {
-    title: "Aplicar Consultoria de Branding | Revee Brand",
+    title: "Iniciar Projeto de Branding | Revee Brand",
     description: "Envie uma aplicação estratégica para projetos de branding, naming, identidade visual, rebranding e estratégia de marca com a Revee Brand.",
     path: "/aplicar",
     image: "assets/seo/revee-brand-agencia-branding-piracicaba.webp",
@@ -57,8 +61,8 @@ const pages = {
     schema: {
       "@context": "https://schema.org",
       "@graph": [
-        { "@type": "ContactPage", "@id": `${domain}/aplicar#webpage`, url: `${domain}/aplicar`, name: "Aplicar consultoria de branding", isPartOf: { "@id": `${domain}/#website` }, about: { "@id": `${domain}/#organization` }, inLanguage: "pt-BR" },
-        breadcrumb("Aplicar consultoria", "/aplicar"),
+        { "@type": "ContactPage", "@id": `${domain}/aplicar#webpage`, url: `${domain}/aplicar`, name: "Aplicação para projeto de branding", isPartOf: { "@id": `${domain}/#website` }, about: { "@id": `${domain}/#organization` }, inLanguage: "pt-BR" },
+        breadcrumb("Iniciar projeto", "/aplicar"),
       ],
     },
   },
@@ -120,14 +124,14 @@ for (const [file, data] of Object.entries(pages)) {
     };
   }
   let html = fs.readFileSync(file, "utf8");
-  const head = `  <head>\n    <meta charset="utf-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />${shared(data)}\n    <script type="application/ld+json">\n${JSON.stringify(data.schema, null, 6)}\n    </script>\n  </head>`;
+  const head = `  <head>\n    <meta charset="utf-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <base href="/" />${shared(data)}\n    <script type="application/ld+json">\n${JSON.stringify(data.schema, null, 6)}\n    </script>\n  </head>`;
   html = html.replace(/  <head>[\s\S]*?  <\/head>/, head);
   fs.writeFileSync(file, html);
 }
 
 for (const file of fs.readdirSync(".").filter((name) => name.endsWith(".html"))) {
   let html = fs.readFileSync(file, "utf8");
-  html = html.replaceAll('alt="Revee Brand"', 'alt="Logo da Revee Brand, consultoria de branding e estratégia de marca em Piracicaba com atuação global"');
+  html = html.replaceAll('alt="Revee Brand"', 'alt="Logo da Revee Brand, agência de branding e estratégia de marca em Piracicaba com atuação global"');
   html = html.replaceAll('alt="Beleza Wellness"', 'alt="Projeto de rebranding e packaging Beleza Wellness desenvolvido pela Revee Brand"');
   html = html.replaceAll('alt="CavaliCarvalho"', 'alt="Projeto de branding e website Cavali Carvalho desenvolvido pela Revee Brand"');
   html = html.replaceAll('alt="Revee AI"', 'alt="Revee AI, inteligência artificial para estratégia de marcas da Revee Brand"');

@@ -2,8 +2,10 @@
 /servicos                      /services.html                     200
 /cases.html                    /portfolio                         301!
 /portfolio                     /cases.html                        200
+/projetos                      /cases.html                        200
 /culture.html                  /cultura                           301!
 /cultura                       /culture.html                      200
+/metodo                        /culture.html                      200
 /about.html                    /sobre                             301!
 /sobre                         /about.html                        200
 /contact.html                  /aplicar                           301!

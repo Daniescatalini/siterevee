@@ -6337,6 +6337,37 @@ body {
   border-radius: 6px;
 }
 
+.ai-chat-prompts.is-hidden {
+  display: none;
+}
+
+.ai-chat .ai-message {
+  display: grid;
+  gap: 9px;
+}
+
+.ai-chat .ai-message p {
+  margin: 0;
+  color: inherit;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.ai-message-kicker {
+  color: rgba(246, 244, 239, 0.48);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ai-message-title {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
 /* Application */
 .application-flow {
   max-width: 1500px;
@@ -6350,6 +6381,20 @@ body {
   font-size: var(--display-lg);
   line-height: 1.02;
   letter-spacing: 0;
+}
+
+.application-fields label small {
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.application-subquestion {
+  margin: 34px 0 16px;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 500;
 }
 
 .application-fields,
