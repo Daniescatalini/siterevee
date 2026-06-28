@@ -25,7 +25,9 @@ exports.handler = async (event) => {
   }
 
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    || process.env.SUPABASE_SECRET_KEY
+    || process.env.SUPABASE_SERVICE_KEY;
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     return json(500, { error: "Supabase environment variables are missing" });
@@ -59,14 +61,20 @@ exports.handler = async (event) => {
     return json(422, { error: `Field is too long: ${oversizedField}` });
   }
 
+  const supabaseAuthHeaders = {
+    apikey: supabaseServiceRoleKey
+  };
+  if (!supabaseServiceRoleKey.startsWith("sb_secret_")) {
+    supabaseAuthHeaders.Authorization = `Bearer ${supabaseServiceRoleKey}`;
+  }
+
   let insertResponse;
   try {
     insertResponse = await fetch(`${supabaseUrl.replace(/\/$/, "")}/rest/v1/project_applications`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        apikey: supabaseServiceRoleKey,
-        Authorization: `Bearer ${supabaseServiceRoleKey}`,
+        ...supabaseAuthHeaders,
         Prefer: "return=representation"
       },
       body: JSON.stringify(application)
@@ -89,8 +97,7 @@ exports.handler = async (event) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        apikey: supabaseServiceRoleKey,
-        Authorization: `Bearer ${supabaseServiceRoleKey}`
+        ...supabaseAuthHeaders
       },
       body: JSON.stringify(savedApplication)
     });

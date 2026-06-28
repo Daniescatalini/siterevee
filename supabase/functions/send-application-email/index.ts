@@ -49,12 +49,20 @@ Deno.serve(async (request) => {
   const subject = "🚀 Nova aplicação — Revee Brand";
 
   const html = `
-    <div style="margin:0;padding:40px 20px;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#111;">
-      <div style="max-width:720px;margin:0 auto;padding:44px;background:#fff;border:1px solid #e4e4e1;">
+    <style>
+      @media only screen and (max-width:600px) {
+        .email-shell { padding: 0 !important; }
+        .email-card { padding: 26px 22px !important; border-left: 0 !important; border-right: 0 !important; }
+        .email-title { font-size: 30px !important; }
+        .email-columns { display: block !important; }
+      }
+    </style>
+    <div class="email-shell" style="margin:0;padding:40px 20px;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#111;">
+      <div class="email-card" style="max-width:720px;margin:0 auto;padding:44px;background:#fff;border:1px solid #e4e4e1;">
         <p style="margin:0 0 12px;color:#777;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;">Revee Brand</p>
-        <h1 style="margin:0 0 36px;font-size:36px;line-height:1.08;font-weight:400;">Nova aplicação</h1>
+        <h1 class="email-title" style="margin:0 0 36px;font-size:36px;line-height:1.08;font-weight:400;">Nova aplicação</h1>
         ${section("Dados", `
-          <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:32px;">
+          <div class="email-columns" style="display:grid;grid-template-columns:1fr 1fr;column-gap:32px;">
             <div>${detail("Nome", application.name)}${detail("Empresa", application.company_name)}${detail("Cidade", application.city)}</div>
             <div>${detail("WhatsApp", application.whatsapp)}${detail("E-mail", application.email)}${detail("Instagram/Site", application.instagram_website)}</div>
           </div>
@@ -89,18 +97,26 @@ Deno.serve(async (request) => {
   ].join("\n");
 
   const customerHtml = `
-    <div style="margin:0;padding:40px 20px;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#111;">
-      <div style="max-width:680px;margin:0 auto;padding:48px;background:#fff;border:1px solid #e4e4e1;">
+    <style>
+      @media only screen and (max-width:600px) {
+        .email-shell { padding: 0 !important; }
+        .email-card { padding: 28px 22px !important; border-left: 0 !important; border-right: 0 !important; }
+        .email-title { font-size: 29px !important; }
+        .email-button { display: block !important; width: auto !important; margin: 0 0 10px !important; padding: 14px 16px !important; text-align: center !important; }
+      }
+    </style>
+    <div class="email-shell" style="margin:0;padding:40px 20px;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#111;">
+      <div class="email-card" style="max-width:680px;margin:0 auto;padding:48px;background:#fff;border:1px solid #e4e4e1;">
         <p style="margin:0 0 12px;color:#777;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;">Revee Brand</p>
-        <h1 style="margin:0 0 32px;font-size:36px;line-height:1.1;font-weight:400;">Sua aplicação foi recebida.</h1>
+        <h1 class="email-title" style="margin:0 0 32px;font-size:36px;line-height:1.1;font-weight:400;">Sua aplicação foi recebida.</h1>
         <p style="margin:0 0 18px;font-size:17px;line-height:1.7;">Olá, ${escapeHtml(application.name)}.</p>
         <p style="margin:0 0 18px;font-size:17px;line-height:1.7;">Obrigado por compartilhar um pouco sobre a sua marca.</p>
         <p style="margin:0 0 18px;font-size:17px;line-height:1.7;">A partir das informações enviadas, iniciaremos uma análise inicial para compreender seu momento, seus desafios e como podemos contribuir de forma estratégica.</p>
         <p style="margin:0 0 32px;font-size:17px;line-height:1.7;">Você receberá um retorno em até 1 dia útil com os próximos passos.</p>
         <p style="margin:0 0 24px;font-size:17px;line-height:1.7;">Enquanto isso, convidamos você a conhecer um pouco mais sobre o nosso trabalho.</p>
         <div style="margin:0 0 42px;">
-          <a href="https://reveebrand.com/projetos" style="display:inline-block;margin:0 10px 10px 0;padding:14px 20px;border-radius:4px;background:#050505;color:#fff;text-decoration:none;font-size:14px;font-weight:700;">Conhecer nossos projetos</a>
-          <a href="https://reveebrand.com/metodo" style="display:inline-block;margin:0 0 10px;padding:14px 20px;border-radius:4px;background:#050505;color:#fff;text-decoration:none;font-size:14px;font-weight:700;">Conhecer nosso método</a>
+          <a class="email-button" href="https://reveebrand.com/projetos" style="display:inline-block;margin:0 10px 10px 0;padding:14px 20px;border-radius:4px;background:#050505;color:#fff;text-decoration:none;font-size:14px;font-weight:700;">Conhecer nossos projetos</a>
+          <a class="email-button" href="https://reveebrand.com/metodo" style="display:inline-block;margin:0 0 10px;padding:14px 20px;border-radius:4px;background:#050505;color:#fff;text-decoration:none;font-size:14px;font-weight:700;">Conhecer nosso método</a>
         </div>
         <div style="padding-top:28px;border-top:1px solid #e7e7e4;color:#666;font-size:13px;line-height:1.7;">
           <p style="margin:0 0 22px;">Cada projeto desenvolvido pela Revee é construído de forma personalizada. Por isso, analisamos cuidadosamente cada aplicação antes de iniciar uma nova parceria.</p>

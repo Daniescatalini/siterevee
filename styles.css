@@ -7123,3 +7123,352 @@ h3 strong,
     font-size: 2.7rem;
   }
 }
+
+/* Final responsive refinement: compact forms and calm mobile hierarchy */
+.application-form {
+  width: min(980px, 100%);
+}
+
+.application-fields,
+.application-wide,
+.application-options {
+  width: min(880px, 100%);
+}
+
+.application-fields input {
+  height: 58px;
+  min-height: 58px;
+  padding: 0 18px;
+}
+
+.application-step h2 {
+  font-size: clamp(2.8rem, 4.2vw, 3.5rem);
+}
+
+.application-wide textarea {
+  min-height: 160px;
+}
+
+.application-fields input:-webkit-autofill,
+.application-fields input:-webkit-autofill:hover,
+.application-fields input:-webkit-autofill:focus,
+.application-wide textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--white);
+  -webkit-box-shadow: 0 0 0 1000px #090909 inset;
+  caret-color: var(--white);
+  transition: background-color 9999s ease-out 0s;
+}
+
+@media (max-width: 620px) {
+  :root {
+    --section-space: 4.5rem;
+  }
+
+  .site-header {
+    min-height: 68px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .brand-mark {
+    width: 142px;
+  }
+
+  .home-hero {
+    padding-top: 68px;
+  }
+
+  .hero-frame,
+  .editorial-frame {
+    min-height: auto;
+  }
+
+  .hero-meta {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 0;
+    font-size: 0.58rem;
+  }
+
+  .hero-meta span:last-child {
+    text-align: right;
+  }
+
+  .hero-copy {
+    margin-top: 0;
+    padding: 42px 0 58px;
+  }
+
+  .editorial-title,
+  .hero-method-title {
+    min-height: 0;
+    max-width: 100%;
+    font-size: 2.2rem;
+    line-height: 1.1;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .hero-method-title br {
+    display: none;
+  }
+
+  .hero-method-title .hero-line {
+    display: inline;
+  }
+
+  .hero-method-title .hero-focus-word {
+    display: inline;
+  }
+
+  .hero-support {
+    max-width: 32rem;
+    margin-top: 24px;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .hero-actions a {
+    min-height: 48px;
+  }
+
+  .application-flow {
+    min-height: 100svh;
+    padding: 98px 20px 94px;
+  }
+
+  .application-step.is-active {
+    gap: 18px;
+  }
+
+  .application-step h1,
+  .application-step h2 {
+    max-width: 100%;
+    font-size: 2rem;
+    line-height: 1.08;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .application-step p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .application-fields {
+    gap: 14px;
+  }
+
+  .application-fields label,
+  .application-wide {
+    gap: 8px;
+    font-size: 0.68rem;
+  }
+
+  .application-fields input {
+    height: 54px;
+    min-height: 54px;
+    padding: 0 16px;
+    font-size: 1rem;
+  }
+
+  .application-wide textarea {
+    min-height: 138px;
+    padding: 15px 16px;
+    font-size: 1rem;
+  }
+
+  .application-options {
+    gap: 8px;
+  }
+
+  .application-options label {
+    min-height: 54px;
+    padding: 13px 14px 13px 46px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .application-options label::before {
+    left: 17px;
+  }
+
+  .application-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .application-actions .primary-action,
+  .application-actions .secondary-action {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 12px;
+    font-size: 0.68rem;
+  }
+
+  .application-step[data-step="0"] .application-actions,
+  .application-step[data-step="0"] .application-next {
+    width: 100%;
+  }
+
+  .application-progress {
+    left: 20px;
+    right: 20px;
+  }
+
+  .build-timeline {
+    display: block;
+  }
+
+  .timeline-head {
+    position: static;
+    max-width: 100%;
+  }
+
+  .timeline-head h2 {
+    margin-top: 2rem;
+    font-size: 2.25rem;
+    line-height: 1.08;
+  }
+
+  .timeline-scroll {
+    grid-template-columns: 8px minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 3.5rem;
+  }
+
+  .timeline-items {
+    gap: 18px;
+    margin-top: 0;
+  }
+
+  .timeline-item {
+    min-height: 0;
+    padding: 10px 0 28px;
+  }
+
+  .timeline-item.is-active {
+    transform: none;
+  }
+
+  .timeline-item h3 {
+    margin-top: 8px;
+    font-size: 1.45rem;
+    line-height: 1.1;
+  }
+
+  .timeline-item p {
+    margin-top: 10px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .project-hero {
+    min-height: 78svh;
+    padding: 104px 20px 32px;
+  }
+
+  .project-hero-copy {
+    bottom: auto;
+    width: 100%;
+  }
+
+  .project-hero-copy h1 {
+    font-size: 2.35rem;
+  }
+
+  .project-hero-copy p {
+    max-width: 31rem;
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .project-tags {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  .project-tags span {
+    min-height: 28px;
+    font-size: 0.6rem;
+  }
+
+  .project-intro,
+  .project-text-block {
+    min-height: 0;
+    padding: 72px 20px;
+    gap: 1.5rem;
+  }
+
+  .project-intro p {
+    max-width: 100%;
+    font-size: 1.35rem;
+    line-height: 1.45;
+  }
+
+  .project-text-block h2 {
+    font-size: 1.85rem;
+  }
+
+  .project-text-block p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .project-media,
+  .project-media.split,
+  .project-final-media {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: auto;
+  }
+
+  .project-media img,
+  .project-media video,
+  .project-media.split img,
+  .project-media.split video {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .case-stack a {
+    min-height: 520px;
+    height: 68svh;
+  }
+
+  .case-stack a > div {
+    left: 20px;
+    right: 20px;
+    bottom: 26px;
+  }
+
+  .case-stack h2 {
+    font-size: 2rem;
+  }
+
+  .case-stack p {
+    max-width: 100%;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .case-stack small {
+    font-size: 0.62rem;
+  }
+
+  .ai-orb {
+    width: 46px;
+    height: 46px;
+  }
+}
