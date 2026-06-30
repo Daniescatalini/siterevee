@@ -12,15 +12,15 @@ const shared = (data) => `
     <meta property="og:description" content="${data.ogDescription || data.description}" />
     <meta property="og:url" content="${domain}${data.path}" />
     <meta property="og:site_name" content="Revee Brand" />
-    <meta property="og:image" content="${domain}/assets/seo/revee-brand-compartilhamento.png" />
+    <meta property="og:image" content="${domain}/assets/seo/revee-brand-compartilhamento-1200x630.png" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="3508" />
-    <meta property="og:image:height" content="2481" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Logotipo da Revee Brand em fundo preto, agência de branding e estratégia de marca" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${data.title}" />
     <meta name="twitter:description" content="${data.ogDescription || data.description}" />
-    <meta name="twitter:image" content="${domain}/assets/seo/revee-brand-compartilhamento.png" />
+    <meta name="twitter:image" content="${domain}/assets/seo/revee-brand-compartilhamento-1200x630.png" />
     <link rel="icon" type="image/x-icon" sizes="64x64" href="/favicon.ico?v=5" />
     <link rel="shortcut icon" href="/favicon.ico?v=5" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -39,8 +39,8 @@ const breadcrumb = (name, path) => ({
 
 const pages = {
   "about.html": {
-    title: "Sobre a Revee Brand | Consultoria de Branding em Piracicaba",
-    description: "Conheça a Revee Brand, agência de branding em Piracicaba com atuação global, direção criativa, estratégia de marca, tecnologia e crescimento.",
+    title: "Sobre a Revee Brand | Estratégia para Marcas que Crescem",
+    description: "Conheça a Revee Brand, uma consultoria especializada em branding estratégico, arquitetura de marca e posicionamento para empresas em crescimento.",
     path: "/sobre",
     image: "assets/seo/revee-brand-agencia-branding-piracicaba.webp",
     imageAlt: "Daniela Escatalini e a estrutura estratégica da Revee Brand, agência de branding em Piracicaba",
@@ -53,8 +53,8 @@ const pages = {
     },
   },
   "contact.html": {
-    title: "Iniciar Projeto de Branding | Revee Brand",
-    description: "Envie uma aplicação estratégica para projetos de branding, naming, identidade visual, rebranding e estratégia de marca com a Revee Brand.",
+    title: "Iniciar um Projeto de Branding | Revee Brand",
+    description: "Solicite uma análise estratégica da sua marca. Conte-nos sobre seu negócio e descubra como a Revee pode estruturar seu crescimento.",
     path: "/aplicar",
     image: "assets/seo/revee-brand-agencia-branding-piracicaba.webp",
     imageAlt: "Aplicação para consultoria estratégica de branding com a Revee Brand",
@@ -116,7 +116,7 @@ for (const [file, data] of Object.entries(pages)) {
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Início", item: `${domain}/` },
-            { "@type": "ListItem", position: 2, name: "Portfólio", item: `${domain}/portfolio` },
+            { "@type": "ListItem", position: 2, name: "Projetos", item: `${domain}/projetos` },
             { "@type": "ListItem", position: 3, name: data.project, item: `${domain}${data.path}` },
           ],
         },

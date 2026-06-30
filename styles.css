@@ -6848,6 +6848,61 @@ textarea:focus-visible {
   }
 }
 
+/* Journal entry point in the global navigation */
+.header-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.journal-pill {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 1px solid rgba(244, 243, 239, 0.24);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.journal-pill:hover,
+.journal-pill.is-active {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--black);
+}
+
+@media (max-width: 620px) {
+  .site-header {
+    grid-template-columns: 1fr auto auto;
+  }
+
+  .header-actions .contact-pill {
+    display: none;
+  }
+
+  .journal-pill {
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 0.56rem;
+  }
+
+  .application-body .header-actions .journal-pill {
+    display: none;
+  }
+
+  .application-body .header-actions .contact-pill {
+    display: inline-flex;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

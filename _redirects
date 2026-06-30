@@ -1,8 +1,12 @@
 /services.html                 /servicos                          301!
 /servicos                      /services.html                     200
-/cases.html                    /portfolio                         301!
-/portfolio                     /cases.html                        200
+/cases.html                    /projetos                          301!
+/portfolio                     /projetos                          301!
 /projetos                      /cases.html                        200
+/journal                       /journal.html                      200
+/journal/                      /journal.html                      200
+/journal/:slug                 /journal-:slug.html                200
+/daniela-escatalini            /daniela-escatalini.html           200
 /culture.html                  /cultura                           301!
 /cultura                       /culture.html                      200
 /metodo                        /culture.html                      200

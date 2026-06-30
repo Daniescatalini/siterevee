@@ -1,0 +1,38 @@
+export const journalCategories = [
+  "Branding",
+  "Posicionamento",
+  "Imagem",
+  "Design",
+  "Marketing",
+  "Vendas",
+  "Negócios",
+  "Tendências",
+  "Conversas",
+];
+
+export const journalArticles = [
+  {
+    id: "journal-daniela-001",
+    slug: "ainda-vale-a-pena-ser-designer-em-2026",
+    title: "Ainda vale a pena ser designer em 2026?",
+    subtitle: "Minha opinião após quatro anos vivendo essa profissão.",
+    description: "Daniela Escatalini reflete sobre carreira, inteligência artificial, valorização e o futuro do design após quatro anos vivendo a profissão.",
+    category: "Design",
+    tags: ["Design", "Carreira", "Inteligência Artificial", "Branding", "Negócios"],
+    date: "2026-06-29",
+    displayDate: "29 de junho de 2026",
+    readingTime: "18 min de leitura",
+    author: "Daniela Escatalini",
+    authorRole: "Founder & Brand Strategist — Revee Brand",
+    authorImage: "/assets/journal/daniela-escatalini-colunista-the-revee-journal.jpg",
+    authorInstagram: "https://www.instagram.com/daniescatalini",
+    authorLinkedin: "https://www.linkedin.com/in/danielaescatalini/",
+    coverImage: "/assets/journal/revee-journal-ainda-vale-a-pena-ser-designer-2026.jpg",
+    socialImage: "/assets/journal/revee-journal-ainda-vale-a-pena-ser-designer-2026-social.jpg",
+    coverAlt: "Mãos de Daniela Escatalini trabalhando em um projeto de design no notebook para matéria do The Revee Journal",
+    contentFile: "src/content/journal/ainda-vale-a-pena-ser-designer-em-2026.md",
+    featured: true,
+    trending: true,
+    type: "article",
+  },
+];

@@ -1,5 +1,5 @@
 [build]
-  command = "node scripts/generate-sitemap.mjs"
+  command = "node scripts/generate-journal.mjs && node scripts/generate-sitemap.mjs"
   publish = "."
   functions = "netlify/functions"
 
