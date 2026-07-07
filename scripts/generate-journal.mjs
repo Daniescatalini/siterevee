@@ -2,7 +2,9 @@ import fs from "node:fs";
 import { journalArticles as journalArticleDefinitions, journalCategories } from "../src/content/journal.mjs";
 
 const domain = "https://reveebrand.com";
+const journalPath = "/thejournal";
 const socialFallback = `${domain}/assets/seo/revee-brand-compartilhamento-1200x630.png`;
+const journalSocialImage = `${domain}/assets/journal/the-revee-journal-compartilhamento-1200x630.png`;
 const danielaAuthorImage = "/assets/journal/daniela-escatalini-colunista-the-revee-journal.jpg";
 const journalSuggestions = [
   "Branding",
@@ -113,36 +115,36 @@ const authorName = (article) => article.author === "Daniela Escatalini"
   ? `<a href="/daniela-escatalini">Daniela Escatalini</a>`
   : escapeHtml(article.author);
 
-const tagLinks = (article, className = "journal-tags") => `<div class="${className}" aria-label="Temas da matéria">${(article.tags || []).map((tag) => `<a href="/journal?tag=${encodeURIComponent(tag)}" data-journal-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</a>`).join("")}</div>`;
+const tagLinks = (article, className = "journal-tags") => `<div class="${className}" aria-label="Temas da matéria">${(article.tags || []).map((tag) => `<a href="${journalPath}?tag=${encodeURIComponent(tag)}" data-journal-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</a>`).join("")}</div>`;
 
 for (const file of fs.readdirSync(".")) {
   if (/^journal-.+\.html$/.test(file)) fs.unlinkSync(file);
 }
 
 const header = () => `
-    <a class="journal-release-ticker" href="/journal#newsletter" aria-label="Novas matérias todo domingo e quinta. Assine o Journal.">
+    <a class="journal-release-ticker" href="${journalPath}#newsletter" aria-label="Novas matérias às quintas e aos domingos. Assine o Journal.">
       <span class="journal-release-ticker-track" aria-hidden="true">
-        ${Array.from({ length: 6 }, () => `<span>Novas matérias todo domingo e quinta</span><i>•</i>`).join("")}
+        ${Array.from({ length: 6 }, () => `<span>Novas matérias às quintas e aos domingos</span><i>•</i>`).join("")}
       </span>
     </a>
     <header class="journal-masthead">
-      <a class="journal-wordmark" href="/journal" aria-label="The Revee Journal — página inicial">
+      <a class="journal-wordmark" href="${journalPath}" aria-label="The Revee Journal — página inicial">
         <span>The Revee</span><em>Journal</em>
       </a>
       <nav class="journal-primary-nav" aria-label="Navegação do Journal">
-        <a href="/journal#materias">Matérias</a>
-        <a href="/journal#colunistas">Colunistas</a>
-        <a class="journal-subscribe-link" href="/journal#newsletter">Assine</a>
+        <a href="${journalPath}#materias">Matérias</a>
+        <a href="${journalPath}#colunistas">Colunistas</a>
+        <a class="journal-subscribe-link" href="${journalPath}#newsletter">Assine</a>
       </nav>
     </header>
     <nav class="journal-topic-nav" aria-label="Temas do Journal">
-      ${journalCategories.filter((category) => category !== "Conversas").map((category) => `<a href="/journal?tag=${encodeURIComponent(category)}">${category}</a>`).join("")}
+      ${journalCategories.filter((category) => category !== "Conversas").map((category) => `<a href="${journalPath}?tag=${encodeURIComponent(category)}">${category}</a>`).join("")}
     </nav>`;
 
 const footer = `
     <footer class="journal-publication-footer">
-      <a class="journal-wordmark" href="/journal"><span>The Revee</span><em>Journal</em></a>
-      <div><a href="/journal#materias">Matérias</a><a href="/journal#colunistas">Colunistas</a><a href="/journal#newsletter">Newsletter</a></div>
+      <a class="journal-wordmark" href="${journalPath}"><span>The Revee</span><em>Journal</em></a>
+      <div><a href="${journalPath}#materias">Matérias</a><a href="${journalPath}#colunistas">Colunistas</a><a href="${journalPath}#newsletter">Newsletter</a></div>
       <p>Perspectivas editoriais da <a href="/">Revee Brand</a>.<br />© 2026 The Revee Journal.</p>
     </footer>`;
 
@@ -183,16 +185,16 @@ const head = ({ title, description, path, image = socialFallback, type = "websit
 
 const card = (article, className = "journal-card") => `
   <article class="${className} reveal" data-journal-card data-category="${escapeHtml(article.category)}" data-search="${escapeHtml(searchText(article))}">
-    <a class="journal-card-media" href="/journal/${article.slug}" aria-label="Ler ${escapeHtml(article.title)}">
+    <a class="journal-card-media" href="${journalPath}/${article.slug}" aria-label="Ler ${escapeHtml(article.title)}">
       <img loading="lazy" decoding="async" src="${article.coverImage}" alt="${escapeHtml(article.coverAlt)}" />
     </a>
     <div class="journal-card-copy">
       <div class="journal-card-meta"><span>${article.demo ? "Matéria demonstrativa · " : ""}${article.category}</span><span>${article.readingTime}</span></div>
-      <h2><a href="/journal/${article.slug}">${escapeHtml(article.title)}</a></h2>
+      <h2><a href="${journalPath}/${article.slug}">${escapeHtml(article.title)}</a></h2>
       <p>${escapeHtml(article.subtitle)}</p>
       ${tagLinks(article)}
       <div class="journal-card-byline"><span>Por ${authorName(article)}</span><span>${article.displayDate}</span></div>
-      <a class="journal-read-link" href="/journal/${article.slug}">Ler matéria <span aria-hidden="true">↗</span></a>
+      <a class="journal-read-link" href="${journalPath}/${article.slug}">Ler matéria <span aria-hidden="true">↗</span></a>
     </div>
   </article>`;
 
@@ -213,15 +215,15 @@ const columnists = [...new Map(journalArticles
 const journalSchema = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "CollectionPage", "@id": `${domain}/journal#webpage`, url: `${domain}/journal`, name: "The Revee Journal", description: "Perspectivas da Revee Brand sobre branding, posicionamento, imagem, marketing, vendas, negócios e tendências para marcas em crescimento.", isPartOf: { "@id": `${domain}/#website` }, about: { "@id": `${domain}/#organization` }, inLanguage: "pt-BR" },
-    { "@type": "ItemList", itemListElement: journalArticles.map((article, index) => ({ "@type": "ListItem", position: index + 1, url: `${domain}/journal/${article.slug}`, name: article.title })) },
-    { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Início", item: `${domain}/` }, { "@type": "ListItem", position: 2, name: "The Revee Journal", item: `${domain}/journal` }] },
+    { "@type": "CollectionPage", "@id": `${domain}${journalPath}#webpage`, url: `${domain}${journalPath}`, name: "The Revee Journal", description: "Perspectivas da Revee Brand sobre branding, posicionamento, imagem, marketing, vendas, negócios e tendências para marcas em crescimento.", isPartOf: { "@id": `${domain}/#website` }, about: { "@id": `${domain}/#organization` }, inLanguage: "pt-BR" },
+    { "@type": "ItemList", itemListElement: journalArticles.map((article, index) => ({ "@type": "ListItem", position: index + 1, url: `${domain}${journalPath}/${article.slug}`, name: article.title })) },
+    { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Início", item: `${domain}/` }, { "@type": "ListItem", position: 2, name: "The Revee Journal", item: `${domain}${journalPath}` }] },
   ],
 };
 
 const journalHtml = `<!doctype html>
 <html lang="pt-BR">
-${head({ title: "The Revee Journal | Branding, Posicionamento e Tendências", description: "Perspectivas da Revee Brand sobre branding, posicionamento, imagem, marketing, vendas, negócios e tendências para marcas em crescimento.", path: "/journal", schema: journalSchema })}
+${head({ title: "The Revee Journal | Branding, Posicionamento e Tendências", description: "Perspectivas da Revee Brand sobre branding, posicionamento, imagem, marketing, vendas, negócios e tendências para marcas em crescimento.", path: journalPath, image: journalSocialImage, schema: journalSchema })}
   <body class="journal-body journal-home">
 ${header()}
     <main>
@@ -248,14 +250,14 @@ ${header()}
       <section class="journal-featured" data-journal-standard id="materias" aria-labelledby="destaque-title">
         <div class="journal-section-heading journal-rule-heading"><span>Em destaque</span><p>Edição atual · Junho de 2026</p></div>
         <article>
-          <a class="journal-featured-media" href="/journal/${featured.slug}"><img decoding="async" fetchpriority="high" src="${featured.coverImage}" alt="${escapeHtml(featured.coverAlt)}" /></a>
+          <a class="journal-featured-media" href="${journalPath}/${featured.slug}"><img decoding="async" fetchpriority="high" src="${featured.coverImage}" alt="${escapeHtml(featured.coverAlt)}" /></a>
           <div class="journal-featured-copy">
             <div class="journal-card-meta"><span>${featured.demo ? "Matéria demonstrativa · " : ""}${featured.category}</span><span>${featured.readingTime}</span></div>
-            <h2 id="destaque-title"><a href="/journal/${featured.slug}">${escapeHtml(featured.title)}</a></h2>
+            <h2 id="destaque-title"><a href="${journalPath}/${featured.slug}">${escapeHtml(featured.title)}</a></h2>
             <p>${escapeHtml(featured.subtitle)}</p>
             ${tagLinks(featured)}
             <div class="journal-card-byline"><span>Por ${authorName(featured)}</span><span>${featured.displayDate}</span></div>
-            <a class="journal-read-link" href="/journal/${featured.slug}">Ler matéria <span aria-hidden="true">↗</span></a>
+            <a class="journal-read-link" href="${journalPath}/${featured.slug}">Ler matéria <span aria-hidden="true">↗</span></a>
           </div>
         </article>
       </section>
@@ -311,7 +313,7 @@ for (const article of journalArticles) {
   const articleSchema = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Article", "@id": `${domain}${path}#article`, mainEntityOfPage: `${domain}${path}`, headline: article.title, description: article.description, datePublished: article.date, dateModified: article.date, image: `${domain}${article.socialImage || article.coverImage}`, articleSection: article.category, keywords: article.tags, wordCount: article.content.map((item) => item.text || "").join(" ").split(/\s+/).length, author: article.author === "The Revee Journal" ? { "@type": "Organization", name: "Revee Brand", url: domain } : { "@type": "Person", name: article.author, jobTitle: article.authorRole, url: `${domain}/daniela-escatalini`, sameAs: [article.authorInstagram, article.authorLinkedin].filter(Boolean) }, publisher: { "@type": "Organization", name: "Revee Brand", url: domain, logo: { "@type": "ImageObject", url: `${domain}/assets/optimized/revee-brand-logo-oficial.png` } }, inLanguage: "pt-BR" },
+      { "@type": "Article", "@id": `${domain}${path}#article`, mainEntityOfPage: `${domain}${path}`, headline: article.title, description: article.description, datePublished: article.date, dateModified: article.date, image: `${domain}${article.socialImage || article.coverImage}`, articleSection: article.category, keywords: article.tags, wordCount: article.content.map((item) => item.text || "").join(" ").split(/\s+/).length, author: article.author === "The Revee Journal" ? { "@type": "Organization", name: "Revee Brand", url: domain } : { "@type": "Person", name: article.author, jobTitle: article.authorRole, url: `${domain}/daniela-escatalini`, sameAs: [article.authorInstagram, article.authorLinkedin].filter(Boolean) }, publisher: { "@type": "Organization", name: "Revee Brand", url: domain, logo: { "@type": "ImageObject", url: `${domain}/assets/brand/revee-brand-logo-oficial.svg` } }, inLanguage: "pt-BR" },
       { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Início", item: `${domain}/` }, { "@type": "ListItem", position: 2, name: "Journal", item: `${domain}/journal` }, { "@type": "ListItem", position: 3, name: article.title, item: `${domain}${path}` }] },
     ],
   };
