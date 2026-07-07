@@ -282,7 +282,14 @@ if (applicationForm && applicationSteps.length) {
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) throw new Error("Application submit failed");
+      if (!response.ok) {
+        const fallbackResponse = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({ "form-name": "project-application", ...payload }).toString()
+        });
+        if (!fallbackResponse.ok) throw new Error("Application submit failed");
+      }
       applicationForm.reset();
       showApplicationSuccess();
     } catch (error) {

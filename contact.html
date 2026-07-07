@@ -72,7 +72,7 @@
   </head>
   <body class="application-body">
     <header class="site-header">
-      <a class="brand-mark" href="/" aria-label="Revee Brand"><img decoding="async" src="assets/optimized/revee-brand-logo-oficial.png" alt="Logo da Revee Brand, agência de branding e estratégia de marca em Piracicaba com atuação global" /></a>
+      <a class="brand-mark" href="/" aria-label="Revee Brand"><img decoding="async" src="assets/brand/revee-brand-logo-oficial.svg" alt="Logo da Revee Brand, agência de branding e estratégia de marca em Piracicaba com atuação global" /></a>
       <button class="glass-menu-button" type="button" aria-expanded="false" aria-controls="siteMenu"><span class="menu-dot"></span><span>Menu</span></button>
       <div class="header-actions">
 
@@ -98,7 +98,8 @@
           <i><em data-application-progress></em></i>
         </div>
 
-        <form class="application-form" id="projectApplicationForm" novalidate>
+        <form class="application-form" id="projectApplicationForm" name="project-application" method="POST" data-netlify="true" novalidate>
+          <input type="hidden" name="form-name" value="project-application" />
           <section class="application-step is-active" data-step="0">
             <span class="section-label">Projetos Revee</span>
             <h1>Inicie seu projeto.</h1>
