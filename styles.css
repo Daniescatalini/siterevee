@@ -244,7 +244,7 @@ h3 strong,
 }
 
 .brand-mark {
-  width: clamp(148px, 14vw, 220px);
+  width: clamp(180px, 16vw, 280px);
   min-height: 34px;
   display: inline-flex;
   align-items: center;
