@@ -88,26 +88,37 @@ const subscribeToMailchimp = async ({ name, email }) => {
 
   const subscriberHash = crypto.createHash("md5").update(email).digest("hex");
   const endpoint = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceId}/members/${subscriberHash}`;
+  const basePayload = {
+    email_address: email,
+    status_if_new: "subscribed",
+    status: "subscribed",
+  };
+  const fullPayload = {
+    ...basePayload,
+    merge_fields: { FNAME: name },
+    tags: ["Revee Journal"],
+  };
 
-  try {
+  const sendToMailchimp = async (body) => {
     const response = await fetch(endpoint, {
       method: "PUT",
       headers: {
         Authorization: `Basic ${Buffer.from(`revee:${apiKey}`).toString("base64")}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email_address: email,
-        status_if_new: "subscribed",
-        status: "subscribed",
-        merge_fields: { FNAME: name },
-        tags: ["Revee Journal"],
-      }),
+      body: JSON.stringify(body),
     });
-
     const result = await response.json();
-    if (!response.ok) {
-      console.error("Mailchimp subscription failed", { status: response.status, title: result.title, detail: result.detail });
+    return { response, result };
+  };
+
+  try {
+    const firstAttempt = await sendToMailchimp(fullPayload);
+    if (!firstAttempt.response.ok) {
+      console.error("Mailchimp subscription failed", { status: firstAttempt.response.status, title: firstAttempt.result.title, detail: firstAttempt.result.detail });
+      const fallbackAttempt = await sendToMailchimp(basePayload);
+      if (fallbackAttempt.response.ok) return { configured: true, ok: true, fallback: true };
+      console.error("Mailchimp fallback subscription failed", { status: fallbackAttempt.response.status, title: fallbackAttempt.result.title, detail: fallbackAttempt.result.detail });
       return { configured: true, ok: false };
     }
 
