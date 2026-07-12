@@ -1,8 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="30" fill="#000"/>
-  <g transform="translate(6 9) scale(.9)" fill="#fff">
-    <path d="M26.47 24.78c2.15-.68 13.8-5.96 13.8-5.96l.19-10.35V0H0v8.47h28.41v10.35s.19 4.33-2.07 5.83l-10.16 2.82 19.38 20.32h13.36L26.47 24.78Z"/>
-    <path d="m.94 42.9 3.76 4.51 10.54.38-6.77-9.41L.94 42.9Z"/>
-    <path d="M53.6 47.79a2.25 2.25 0 1 1 0-4.5 2.25 2.25 0 0 1 0 4.5Zm0-4.17a1.92 1.92 0 1 0 0 3.84 1.92 1.92 0 0 0 0-3.84Z"/>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 174.81 170.78">
+  <style>
+    path, polygon { fill: #000; }
+    @media (prefers-color-scheme: dark) {
+      path, polygon { fill: #fff; }
+    }
+  </style>
+  <path d="M94.58,88.54c7.7-2.44,49.3-21.31,49.3-21.31l.67-36.98V0H0v30.26h101.53v36.98s.67,15.46-7.4,20.84l-36.31,10.09,69.25,72.61h47.74l-80.23-82.24Z"/>
+  <polygon points="3.36 153.3 16.81 169.43 54.46 170.78 30.26 137.16 3.36 153.3"/>
 </svg>
