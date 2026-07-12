@@ -173,7 +173,9 @@ const head = ({ title, description, path, image = socialFallback, type = "websit
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${image.startsWith("http") ? image : `${domain}${image}`}" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=6" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=7" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=7" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=7" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preload" href="/assets/fonts/NeueMontreal-Regular.otf" as="font" type="font/otf" crossorigin />
