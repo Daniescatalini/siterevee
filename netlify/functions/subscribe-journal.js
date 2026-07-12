@@ -151,13 +151,27 @@ exports.handler = async (event) => {
     subscribeToMailchimp({ name, email }),
   ]);
 
+  const debug = new URL(event.rawUrl || "https://reveebrand.com").searchParams.get("debug") === "1";
+
   if (!notification.configured && !mailchimp.configured) {
     console.error("Newsletter subscription is missing RESEND_API_KEY and Mailchimp environment variables.");
-    return json(500, { error: "A inscrição não pôde ser concluída agora. Tente novamente em alguns instantes." });
+    return json(500, {
+      error: "A inscrição não pôde ser concluída agora. Tente novamente em alguns instantes.",
+      ...(debug ? { diagnostic: "missing_delivery_configuration", notificationConfigured: false, mailchimpConfigured: false } : {}),
+    });
   }
 
   if (!notification.ok && !mailchimp.ok) {
-    return json(502, { error: "A inscrição não pôde ser concluída agora. Tente novamente em alguns instantes." });
+    return json(502, {
+      error: "A inscrição não pôde ser concluída agora. Tente novamente em alguns instantes.",
+      ...(debug ? {
+        diagnostic: "delivery_failed",
+        notificationConfigured: notification.configured,
+        notificationSent: notification.ok,
+        mailchimpConfigured: mailchimp.configured,
+        mailchimpSubscribed: mailchimp.ok,
+      } : {}),
+    });
   }
 
   return json(200, {
