@@ -120,7 +120,9 @@
 
       <section class="journal-newsletter" id="newsletter" aria-labelledby="newsletter-title">
         <div><span>Newsletter</span><h2 id="newsletter-title">Leituras para quem constrói marcas com intenção.</h2><p>Uma seleção editorial sobre estratégia, imagem, negócios e cultura, enviada quando houver algo relevante a dizer.</p></div>
-        <form class="journal-newsletter-form" data-journal-newsletter novalidate>
+        <form class="journal-newsletter-form" name="journal-newsletter" method="POST" data-netlify="true" data-journal-newsletter novalidate>
+          <input type="hidden" name="form-name" value="journal-newsletter" />
+          <input type="hidden" name="source" value="The Revee Journal" />
           <label><span>Nome</span><input type="text" name="name" autocomplete="name" required /></label>
           <label><span>E-mail</span><input type="email" name="email" autocomplete="email" required /></label>
           <button type="submit">Assine o Journal</button>
