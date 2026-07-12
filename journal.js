@@ -17,7 +17,7 @@ if (newsletterForm) {
       const response = await fetch("/.netlify/functions/subscribe-journal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: formData.get("name"), email: formData.get("email") }),
+        body: JSON.stringify({ name: formData.get("name"), email: formData.get("email"), source: window.location.href }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Não foi possível concluir a inscrição.");
