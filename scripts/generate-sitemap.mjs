@@ -11,9 +11,9 @@ const pages = [
   ["/projetos/c-arq", "0.7"],
   ["/projetos/beleza-wellness", "0.7"],
   ["/projetos/cavali-carvalho", "0.7"],
-  ["/journal", "0.8"],
+  ["/thejournal", "0.8"],
   ["/daniela-escatalini", "0.7"],
-  ...journalArticles.map((article) => [`/journal/${article.slug}`, "0.7"]),
+  ...journalArticles.map((article) => [`/thejournal/${article.slug}`, "0.7"]),
 ];
 const today = new Date().toISOString().slice(0, 10);
 const urls = pages.map(([path, priority]) => `  <url>\n    <loc>https://reveebrand.com${path}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`).join("\n");

@@ -13,6 +13,7 @@ const routes = new Map([
   ["/sobre", "about.html"],
   ["/aplicar", "contact.html"],
   ["/journal", "journal.html"],
+  ["/thejournal", "journal.html"],
   ["/daniela-escatalini", "daniela-escatalini.html"],
   ["/projetos/c-arq", "case-carq.html"],
   ["/projetos/beleza-wellness", "case-beleza-wellness.html"],
@@ -39,6 +40,7 @@ const server = http.createServer((request, response) => {
   const pathname = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname).replace(/\/$/, "") || "/";
   let relativePath = routes.get(pathname);
   if (!relativePath && pathname.startsWith("/journal/")) relativePath = `journal-${pathname.slice("/journal/".length)}.html`;
+  if (!relativePath && pathname.startsWith("/thejournal/")) relativePath = `journal-${pathname.slice("/thejournal/".length)}.html`;
   if (!relativePath) relativePath = pathname.replace(/^\//, "");
 
   const filePath = path.resolve(root, relativePath);
