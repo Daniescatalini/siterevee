@@ -127,11 +127,52 @@ if (journalSearch && journalSearchSection && journalSearchGrid) {
     });
   });
 
-  const requestedTag = new URLSearchParams(window.location.search).get("tag");
+  const queryParams = new URLSearchParams(window.location.search);
+  const requestedTag = queryParams.get("tag");
+  const requestedAuthor = queryParams.get("author");
   if (requestedTag) {
     journalSearch.value = requestedTag;
     searchJournal({ term: requestedTag });
+  } else if (requestedAuthor) {
+    journalSearch.value = requestedAuthor;
+    searchJournal({ term: requestedAuthor });
   }
+}
+
+const featuredSlides = [...document.querySelectorAll("[data-journal-featured-slide]")];
+const featuredPrev = document.querySelector("[data-journal-featured-prev]");
+const featuredNext = document.querySelector("[data-journal-featured-next]");
+const featuredCount = document.querySelector("[data-journal-featured-count]");
+
+if (featuredSlides.length > 1 && featuredPrev && featuredNext) {
+  let activeFeaturedIndex = featuredSlides.findIndex((slide) => !slide.hidden);
+  if (activeFeaturedIndex < 0) activeFeaturedIndex = 0;
+
+  const showFeaturedSlide = (index) => {
+    activeFeaturedIndex = (index + featuredSlides.length) % featuredSlides.length;
+    featuredSlides.forEach((slide, slideIndex) => {
+      slide.hidden = slideIndex !== activeFeaturedIndex;
+    });
+    if (featuredCount) featuredCount.textContent = `${activeFeaturedIndex + 1} / ${featuredSlides.length}`;
+  };
+
+  featuredPrev.addEventListener("click", () => showFeaturedSlide(activeFeaturedIndex - 1));
+  featuredNext.addEventListener("click", () => showFeaturedSlide(activeFeaturedIndex + 1));
+
+  let pointerStartX = null;
+  const featuredSection = document.querySelector(".journal-featured");
+  featuredSection?.addEventListener("pointerdown", (event) => {
+    pointerStartX = event.clientX;
+  });
+  featuredSection?.addEventListener("pointerup", (event) => {
+    if (pointerStartX === null) return;
+    const distance = event.clientX - pointerStartX;
+    pointerStartX = null;
+    if (Math.abs(distance) < 48) return;
+    showFeaturedSlide(distance < 0 ? activeFeaturedIndex + 1 : activeFeaturedIndex - 1);
+  });
+
+  showFeaturedSlide(activeFeaturedIndex);
 }
 
 const articleBody = document.querySelector(".article-body");

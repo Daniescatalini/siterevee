@@ -10,6 +10,7 @@ const journalSuggestions = [
   "Branding",
   "Posicionamento",
   "Imagem",
+  "Fotografia",
   "Marketing",
   "Vendas",
   "Negócios",
@@ -111,9 +112,28 @@ const searchText = (article) => [
   ...article.content.map((block) => block.text || ""),
 ].join(" ").toLocaleLowerCase("pt-BR");
 
-const authorName = (article) => article.author === "Daniela Escatalini"
-  ? `<a href="/daniela-escatalini">Daniela Escatalini</a>`
-  : escapeHtml(article.author);
+const authorHref = (article) => article.author === "Daniela Escatalini"
+  ? "/daniela-escatalini"
+  : `${journalPath}?author=${encodeURIComponent(article.author)}`;
+
+const authorName = (article) => `<a href="${authorHref(article)}" data-journal-author="${escapeHtml(article.author)}">${escapeHtml(article.author)}</a>`;
+
+const socialIcon = (name) => {
+  const icons = {
+    instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
+    email: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>',
+    whatsapp: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 18.5 6.6 15A7.5 7.5 0 1 1 9 17.4l-3.5 1.1Z"/><path d="M9.4 8.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.3 0 .5-.1.7l-.4.5c.6 1 1.4 1.8 2.5 2.3l.5-.5c.2-.2.4-.3.7-.2l1.6.7c.3.1.4.3.4.6v.5c0 .3-.1.6-.4.8-.5.4-1.2.6-1.8.5-2.9-.4-5.7-3.1-6.2-6 0-.6.1-1.2.3-1.5Z"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="4" height="11"/><path d="M6 6h.01"/><path d="M12 20V9h4.5a3.5 3.5 0 0 1 3.5 3.5V20"/><path d="M16 20v-6.5"/></svg>',
+  };
+  return icons[name] || "";
+};
+
+const authorLinks = (profile) => [
+  profile.instagram ? `<a href="${profile.instagram}" target="_blank" rel="noreferrer" aria-label="Instagram de ${escapeHtml(profile.name)}">${socialIcon("instagram")}<span>Instagram</span></a>` : "",
+  profile.email ? `<a href="mailto:${profile.email}" aria-label="E-mail de ${escapeHtml(profile.name)}">${socialIcon("email")}<span>E-mail</span></a>` : "",
+  profile.whatsapp ? `<a href="${profile.whatsapp}" target="_blank" rel="noreferrer" aria-label="WhatsApp de ${escapeHtml(profile.name)}">${socialIcon("whatsapp")}<span>WhatsApp</span></a>` : "",
+  profile.linkedin ? `<a href="${profile.linkedin}" target="_blank" rel="noreferrer" aria-label="LinkedIn de ${escapeHtml(profile.name)}">${socialIcon("linkedin")}<span>LinkedIn</span></a>` : "",
+].join("");
 
 const tagLinks = (article, className = "journal-tags") => `<div class="${className}" aria-label="Temas da matéria">${(article.tags || []).map((tag) => `<a href="${journalPath}?tag=${encodeURIComponent(tag)}" data-journal-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</a>`).join("")}</div>`;
 
@@ -121,10 +141,12 @@ for (const file of fs.readdirSync(".")) {
   if (/^journal-.+\.html$/.test(file)) fs.unlinkSync(file);
 }
 
+const tickerMessage = "Sua dose de conhecimento para marcas com intenção";
+
 const header = () => `
-    <a class="journal-release-ticker" href="${journalPath}#newsletter" aria-label="Novas matérias às quintas e aos domingos. Assine o Journal.">
+    <a class="journal-release-ticker" href="${journalPath}#newsletter" aria-label="${tickerMessage}. Assine o Journal.">
       <span class="journal-release-ticker-track" aria-hidden="true">
-        ${Array.from({ length: 6 }, () => `<span>Novas matérias às quintas e aos domingos</span><i>•</i>`).join("")}
+        ${Array.from({ length: 6 }, () => `<span>${tickerMessage}</span><i>•</i>`).join("")}
       </span>
     </a>
     <header class="journal-masthead">
@@ -200,8 +222,11 @@ const card = (article, className = "journal-card") => `
     </div>
   </article>`;
 
-const featured = journalArticles.find((article) => article.featured) || journalArticles[0];
-const recent = journalArticles.filter((article) => article.id !== featured.id);
+const featuredArticles = journalArticles.filter((article) => article.featured);
+const latestArticles = [...journalArticles].sort((a, b) => new Date(b.date) - new Date(a.date));
+const featuredItems = featuredArticles.length
+  ? [...featuredArticles].sort((a, b) => new Date(b.date) - new Date(a.date))
+  : latestArticles.slice(0, 1);
 const trending = journalArticles.filter((article) => article.trending);
 const conversations = journalArticles.filter((article) => article.category === "Conversas");
 const columnists = [...new Map(journalArticles
@@ -210,7 +235,7 @@ const columnists = [...new Map(journalArticles
     name: article.author,
     role: article.authorRole || "Colunista",
     image: article.authorImage,
-    href: article.author === "Daniela Escatalini" ? "/daniela-escatalini" : "",
+    href: article.author === "Daniela Escatalini" ? "/daniela-escatalini" : `${journalPath}?author=${encodeURIComponent(article.author)}`,
     count: journalArticles.filter((item) => item.author === article.author).length,
   }])).values()];
 
@@ -251,22 +276,27 @@ ${header()}
 
       <section class="journal-featured" data-journal-standard id="materias" aria-labelledby="destaque-title">
         <div class="journal-section-heading journal-rule-heading"><span>Em destaque</span><p>Edição atual · Junho de 2026</p></div>
-        <article>
-          <a class="journal-featured-media" href="${journalPath}/${featured.slug}"><img decoding="async" fetchpriority="high" src="${featured.coverImage}" alt="${escapeHtml(featured.coverAlt)}" /></a>
+        ${featuredItems.map((featured, index) => `<article data-journal-featured-slide ${index === 0 ? "" : "hidden"}>
+          <a class="journal-featured-media" href="${journalPath}/${featured.slug}"><img decoding="async" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} src="${featured.coverImage}" alt="${escapeHtml(featured.coverAlt)}" /></a>
           <div class="journal-featured-copy">
             <div class="journal-card-meta"><span>${featured.demo ? "Matéria demonstrativa · " : ""}${featured.category}</span><span>${featured.readingTime}</span></div>
-            <h2 id="destaque-title"><a href="${journalPath}/${featured.slug}">${escapeHtml(featured.title)}</a></h2>
+            <h2 ${index === 0 ? 'id="destaque-title"' : ""}><a href="${journalPath}/${featured.slug}">${escapeHtml(featured.title)}</a></h2>
             <p>${escapeHtml(featured.subtitle)}</p>
             ${tagLinks(featured)}
             <div class="journal-card-byline"><span>Por ${authorName(featured)}</span><span>${featured.displayDate}</span></div>
             <a class="journal-read-link" href="${journalPath}/${featured.slug}">Ler matéria <span aria-hidden="true">↗</span></a>
           </div>
-        </article>
+        </article>`).join("")}
+        ${featuredItems.length > 1 ? `<div class="journal-featured-controls" aria-label="Navegar matérias em destaque">
+          <button type="button" data-journal-featured-prev aria-label="Matéria em destaque anterior">←</button>
+          <span data-journal-featured-count>1 / ${featuredItems.length}</span>
+          <button type="button" data-journal-featured-next aria-label="Próxima matéria em destaque">→</button>
+        </div>` : ""}
       </section>
 
       ${journalArticles.length > 1 ? `<section class="journal-latest" data-journal-standard aria-labelledby="recentes-title">
         <div class="journal-section-heading journal-rule-heading"><h2 id="recentes-title">Últimas matérias</h2><p>Estratégia, cultura e negócios observados com profundidade.</p></div>
-        <div class="journal-latest-grid" data-journal-grid>${journalArticles.filter((article) => article.id !== featured.id).map((article) => card(article, "journal-latest-card")).join("")}</div>
+        <div class="journal-latest-grid" data-journal-grid>${latestArticles.map((article) => card(article, "journal-latest-card")).join("")}</div>
       </section>` : ""}
 
       <section class="journal-columnists" id="colunistas" aria-labelledby="colunistas-title">
@@ -317,20 +347,26 @@ for (const article of journalArticles) {
   const articleSchema = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Article", "@id": `${domain}${path}#article`, mainEntityOfPage: `${domain}${path}`, headline: article.title, description: article.description, datePublished: article.date, dateModified: article.date, image: `${domain}${article.socialImage || article.coverImage}`, articleSection: article.category, keywords: article.tags, wordCount: article.content.map((item) => item.text || "").join(" ").split(/\s+/).length, author: article.author === "The Revee Journal" ? { "@type": "Organization", name: "Revee Brand", url: domain } : { "@type": "Person", name: article.author, jobTitle: article.authorRole, url: `${domain}/daniela-escatalini`, sameAs: [article.authorInstagram, article.authorLinkedin].filter(Boolean) }, publisher: { "@type": "Organization", name: "Revee Brand", url: domain, logo: { "@type": "ImageObject", url: `${domain}/assets/brand/revee-brand-logo-oficial.svg` } }, inLanguage: "pt-BR" },
+      { "@type": "Article", "@id": `${domain}${path}#article`, mainEntityOfPage: `${domain}${path}`, headline: article.title, description: article.description, datePublished: article.date, dateModified: article.date, image: `${domain}${article.socialImage || article.coverImage}`, articleSection: article.category, keywords: article.tags, wordCount: article.content.map((item) => item.text || "").join(" ").split(/\s+/).length, author: article.author === "The Revee Journal" ? { "@type": "Organization", name: "Revee Brand", url: domain } : { "@type": "Person", name: article.author, jobTitle: article.authorRole, url: article.author === "Daniela Escatalini" ? `${domain}/daniela-escatalini` : `${domain}${journalPath}?author=${encodeURIComponent(article.author)}`, sameAs: [article.authorInstagram, article.authorLinkedin].filter(Boolean) }, publisher: { "@type": "Organization", name: "Revee Brand", url: domain, logo: { "@type": "ImageObject", url: `${domain}/assets/brand/revee-brand-logo-oficial.svg` } }, inLanguage: "pt-BR" },
       { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Início", item: `${domain}/` }, { "@type": "ListItem", position: 2, name: "The Revee Journal", item: `${domain}${journalPath}` }, { "@type": "ListItem", position: 3, name: article.title, item: `${domain}${path}` }] },
     ],
   };
 
   const profile = article.type === "interview" && article.guest ? article.guest : {
-    name: "Daniela Escatalini",
-    role: "Founder & Brand Strategist",
-    company: "Revee Brand",
-    image: danielaAuthorImage,
-    instagram: "https://www.instagram.com/daniescatalini",
-    linkedin: "https://www.linkedin.com/in/danielaescatalini/",
-    bio: "Estrategista de marca e diretora criativa. À frente da Revee Brand, estrutura significado, posicionamento e expressão para marcas em crescimento.",
+    name: article.author,
+    role: article.authorRole || "Colunista",
+    company: article.authorCompany || "",
+    image: article.authorImage || danielaAuthorImage,
+    instagram: article.authorInstagram,
+    linkedin: article.authorLinkedin,
+    email: article.authorEmail,
+    whatsapp: article.authorWhatsApp,
+    bio: article.authorBio || "Colunista do The Revee Journal, com perspectivas sobre marcas, imagem, negócios e cultura.",
   };
+  const profileName = article.author === "Daniela Escatalini"
+    ? `<a href="/daniela-escatalini">${escapeHtml(profile.name)}</a>`
+    : escapeHtml(profile.name);
+  const profileCompany = profile.company ? ` — ${escapeHtml(profile.company)}` : "";
 
   const articleHtml = `<!doctype html>
 <html lang="pt-BR">
@@ -358,7 +394,7 @@ ${header()}
         </section>
         <section class="article-author" aria-labelledby="author-title">
           <img loading="lazy" decoding="async" src="${profile.image}" alt="${escapeHtml(profile.name)}, ${escapeHtml(profile.role)}" />
-          <div><span>${article.type === "interview" ? "Sobre a entrevistada" : "Sobre a autora"}</span><h2 id="author-title">${article.type === "article" ? `<a href="/daniela-escatalini">${escapeHtml(profile.name)}</a>` : escapeHtml(profile.name)}</h2><p class="article-author-role">${escapeHtml(profile.role)} — ${escapeHtml(profile.company)}</p><p>${escapeHtml(profile.bio)}</p><div class="article-author-links">${profile.instagram ? `<a href="${profile.instagram}" target="_blank" rel="noreferrer">Instagram</a>` : ""}${profile.linkedin ? `<a href="${profile.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>` : ""}</div></div>
+          <div><span>${article.type === "interview" ? "Sobre a entrevistada" : "Sobre a autora"}</span><h2 id="author-title">${profileName}</h2><p class="article-author-role">${escapeHtml(profile.role)}${profileCompany}</p><p>${escapeHtml(profile.bio)}</p><div class="article-author-links">${authorLinks(profile)}</div></div>
         </section>
         <nav class="article-next"><span>Continue no Journal</span><a href="${journalPath}">Explorar todas as matérias <span aria-hidden="true">↗</span></a></nav>
         <section class="article-newsletter" id="newsletter"><span>The Revee Journal</span><h2>Continue pensando conosco.</h2><p>Receba novas perspectivas sobre marcas, negócios, imagem e cultura.</p><a href="${journalPath}#newsletter">Assine o Journal</a></section>
@@ -386,7 +422,7 @@ const danielaSchema = {
       name: "Daniela Escatalini",
       url: `${domain}${danielaPath}`,
       image: `${domain}${danielaAuthorImage}`,
-      jobTitle: "Founder & Brand Strategist",
+      jobTitle: "Brand Strategist & Creative Director",
       description: danielaDescription,
       worksFor: { "@id": `${domain}/#organization` },
       sameAs: [
@@ -414,13 +450,13 @@ const danielaSchema = {
 
 const danielaHtml = `<!doctype html>
 <html lang="pt-BR">
-${head({ title: "Daniela Escatalini | Founder & Brand Strategist — Revee Brand", description: danielaDescription, path: danielaPath, image: danielaAuthorImage, type: "profile", schema: danielaSchema })}
+${head({ title: "Daniela Escatalini | Brand Strategist & Creative Director", description: danielaDescription, path: danielaPath, image: danielaAuthorImage, type: "profile", schema: danielaSchema })}
   <body class="journal-body author-page">
 ${header()}
     <main>
       <section class="author-hero">
         <figure><img decoding="async" fetchpriority="high" src="${danielaAuthorImage}" alt="Daniela Escatalini, fundadora, estrategista de marca e colunista do The Revee Journal" /></figure>
-        <div><span>Colunista · Editora fundadora</span><h1>Daniela<br />Escatalini</h1><p class="author-role">Founder & Brand Strategist — Revee Brand</p><p>Daniela atua na construção estratégica de marcas, conectando significado, posicionamento e expressão para transformar percepção em valor e preparar empresas para crescer com mais clareza.</p><div class="author-topics"><span>Branding</span><span>Posicionamento</span><span>Negócios</span><span>Cultura</span></div></div>
+        <div><span>Colunista · Editora fundadora</span><h1>Daniela<br />Escatalini</h1><p class="author-role">Brand Strategist & Creative Director</p><p>Daniela atua na construção estratégica de marcas, conectando significado, posicionamento e expressão para transformar percepção em valor e preparar empresas para crescer com mais clareza.</p><div class="author-topics"><span>Branding</span><span>Posicionamento</span><span>Negócios</span><span>Cultura</span></div></div>
       </section>
 
       <section class="author-trajectory reveal" aria-labelledby="trajetoria-title">
