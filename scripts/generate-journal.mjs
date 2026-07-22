@@ -144,7 +144,7 @@ for (const file of fs.readdirSync(".")) {
 const tickerMessage = "Sua dose de conhecimento para marcas com intenção";
 
 const header = () => `
-    <a class="journal-release-ticker" href="${journalPath}#newsletter" aria-label="${tickerMessage}. Assine o Journal.">
+    <a class="journal-release-ticker" href="${journalPath}" aria-label="${tickerMessage}.">
       <span class="journal-release-ticker-track" aria-hidden="true">
         ${Array.from({ length: 6 }, () => `<span>${tickerMessage}</span><i>•</i>`).join("")}
       </span>
@@ -156,7 +156,6 @@ const header = () => `
       <nav class="journal-primary-nav" aria-label="Navegação do Journal">
         <a href="${journalPath}#materias">Matérias</a>
         <a href="${journalPath}#colunistas">Colunistas</a>
-        <a class="journal-subscribe-link" href="${journalPath}#newsletter">Assine</a>
       </nav>
     </header>
     <nav class="journal-topic-nav" aria-label="Temas do Journal">
@@ -166,7 +165,7 @@ const header = () => `
 const footer = `
     <footer class="journal-publication-footer">
       <a class="journal-wordmark" href="${journalPath}"><span>The Revee</span><em>Journal</em></a>
-      <div><a href="${journalPath}#materias">Matérias</a><a href="${journalPath}#colunistas">Colunistas</a><a href="${journalPath}#newsletter">Newsletter</a></div>
+      <div><a href="${journalPath}#materias">Matérias</a><a href="${journalPath}#colunistas">Colunistas</a></div>
       <p>Perspectivas editoriais da <a href="/">Revee Brand</a>.<br />© 2026 The Revee Journal.</p>
     </footer>`;
 
@@ -310,17 +309,6 @@ ${header()}
         </article>`).join("")}</div>
       </section>
 
-      <section class="journal-newsletter" id="newsletter" aria-labelledby="newsletter-title">
-        <div><span>Newsletter</span><h2 id="newsletter-title">Leituras para quem constrói marcas com intenção.</h2><p>Uma seleção editorial sobre estratégia, imagem, negócios e cultura, enviada quando houver algo relevante a dizer.</p></div>
-        <form class="journal-newsletter-form" name="journal-newsletter" method="POST" netlify data-netlify="true" data-journal-newsletter novalidate>
-          <input type="hidden" name="form-name" value="journal-newsletter" />
-          <input type="hidden" name="source" value="The Revee Journal" />
-          <label><span>Nome</span><input type="text" name="name" autocomplete="name" required /></label>
-          <label><span>E-mail</span><input type="email" name="email" autocomplete="email" required /></label>
-          <button type="submit">Assine o Journal</button>
-          <p class="journal-form-status" data-journal-status aria-live="polite"></p>
-        </form>
-      </section>
     </main>
 ${footer}
     <script src="/script.js"></script>
@@ -397,7 +385,6 @@ ${header()}
           <div><span>${article.type === "interview" ? "Sobre a entrevistada" : "Sobre a autora"}</span><h2 id="author-title">${profileName}</h2><p class="article-author-role">${escapeHtml(profile.role)}${profileCompany}</p><p>${escapeHtml(profile.bio)}</p><div class="article-author-links">${authorLinks(profile)}</div></div>
         </section>
         <nav class="article-next"><span>Continue no Journal</span><a href="${journalPath}">Explorar todas as matérias <span aria-hidden="true">↗</span></a></nav>
-        <section class="article-newsletter" id="newsletter"><span>The Revee Journal</span><h2>Continue pensando conosco.</h2><p>Receba novas perspectivas sobre marcas, negócios, imagem e cultura.</p><a href="${journalPath}#newsletter">Assine o Journal</a></section>
       </article>
     </main>
 ${footer}
@@ -474,7 +461,6 @@ ${header()}
         <nav aria-label="Links de Daniela Escatalini e Revee Brand"><a href="https://www.instagram.com/daniescatalini" target="_blank" rel="noreferrer"><span><small>Conteúdo diário</small>Instagram</span><span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/danielaescatalini/" target="_blank" rel="noreferrer"><span><small>Visão profissional</small>LinkedIn</span><span aria-hidden="true">↗</span></a><a href="https://www.tiktok.com/@daniescatalini" target="_blank" rel="noreferrer"><span><small>Vídeos e ideias</small>TikTok</span><span aria-hidden="true">↗</span></a><a href="https://reveebrand.com" target="_blank" rel="noreferrer"><span><small>Agência</small>Revee Brand</span><span aria-hidden="true">↗</span></a></nav>
       </section>
 
-      <section class="journal-newsletter author-newsletter" id="newsletter" aria-labelledby="author-newsletter-title"><div><span>Newsletter</span><h2 id="author-newsletter-title">Perspectivas de diferentes vozes.</h2><p>Receba novas matérias e conversas do The Revee Journal sobre marcas, negócios, imagem e cultura.</p></div><form class="journal-newsletter-form" name="journal-newsletter" method="POST" netlify data-netlify="true" data-journal-newsletter novalidate><input type="hidden" name="form-name" value="journal-newsletter" /><input type="hidden" name="source" value="The Revee Journal" /><label><span>Nome</span><input type="text" name="name" autocomplete="name" required /></label><label><span>E-mail</span><input type="email" name="email" autocomplete="email" required /></label><button type="submit">Assine o Journal</button><p class="journal-form-status" data-journal-status aria-live="polite"></p></form></section>
     </main>
 ${footer}
     <script src="/script.js"></script>
