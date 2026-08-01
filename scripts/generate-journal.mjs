@@ -3,6 +3,7 @@ import { journalArticles as journalArticleDefinitions, journalCategories } from 
 
 const domain = "https://reveebrand.com";
 const journalPath = "/thejournal";
+const googleAnalyticsId = "G-FGG83013WS";
 const socialFallback = `${domain}/assets/seo/revee-brand-compartilhamento-1200x630.png`;
 const journalSocialImage = `${domain}/assets/journal/the-revee-journal-compartilhamento-1200x630.png`;
 const danielaAuthorImage = "/assets/journal/daniela-escatalini-colunista-the-revee-journal.jpg";
@@ -203,6 +204,13 @@ const head = ({ title, description, path, image = socialFallback, type = "websit
     <link rel="preload" href="/assets/fonts/Montserrat-Regular.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/journal.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${googleAnalyticsId}');
+    </script>
     <script type="application/ld+json">${JSON.stringify(schema)}</script>
   </head>`;
 
@@ -359,7 +367,7 @@ for (const article of journalArticles) {
   const articleHtml = `<!doctype html>
 <html lang="pt-BR">
 ${head({ title: `${article.title} | The Revee Journal`, description: article.description, path, image: article.socialImage || article.coverImage, type: "article", schema: articleSchema })}
-  <body class="journal-body article-body" data-article-title="${escapeHtml(article.title)}" data-article-category="${article.category}" data-article-author="${escapeHtml(article.author)}" data-article-summary="${escapeHtml(article.description || article.subtitle)}" data-article-url="${domain}${path}">
+  <body class="journal-body article-body" data-article-title="${escapeHtml(article.title)}" data-article-slug="${escapeHtml(article.slug)}" data-article-category="${article.category}" data-article-author="${escapeHtml(article.author)}" data-article-summary="${escapeHtml(article.description || article.subtitle)}" data-article-url="${domain}${path}">
 ${header()}
     <main>
       <article class="journal-article">
@@ -369,6 +377,11 @@ ${header()}
           <h1>${escapeHtml(article.title)}</h1>
           <p>${escapeHtml(article.subtitle)}</p>
           <div class="article-meta"><span>Por ${authorName(article)}</span><time datetime="${article.date}">${article.displayDate}</time><span>${article.readingTime}</span></div>
+          <button type="button" class="article-like-button" data-journal-like data-journal-slug="${escapeHtml(article.slug)}" aria-pressed="false" hidden>
+            <span aria-hidden="true">♡</span>
+            <span data-journal-like-label>Curtir</span>
+            <strong data-journal-like-count>0</strong>
+          </button>
         </header>
         <figure class="article-cover"><img decoding="async" fetchpriority="high" src="${article.coverImage}" alt="${escapeHtml(article.coverAlt)}" /></figure>
         <div class="article-layout">

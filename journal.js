@@ -130,6 +130,7 @@ const articleBody = document.querySelector(".article-body");
 
 if (articleBody) {
   const title = articleBody.dataset.articleTitle;
+  const slug = articleBody.dataset.articleSlug;
   const category = articleBody.dataset.articleCategory;
   const author = articleBody.dataset.articleAuthor || "The Revee Journal";
   const summary = articleBody.dataset.articleSummary || "Uma perspectiva sobre marcas, negócios e cultura.";
@@ -142,6 +143,63 @@ if (articleBody) {
   const linkedin = document.querySelector('[data-share="linkedin"]');
   const twitter = document.querySelector('[data-share="twitter"]');
   const copyButton = document.querySelector('[data-share="copy"]');
+  const likeButton = document.querySelector("[data-journal-like]");
+  const likeCount = document.querySelector("[data-journal-like-count]");
+  const likeLabel = document.querySelector("[data-journal-like-label]");
+  const likeStorageKey = slug ? `revee-journal-liked:${slug}` : "";
+
+  const formatLikes = (count = 0) => {
+    if (count >= 1000) return `${(count / 1000).toFixed(count >= 10000 ? 0 : 1).replace(".", ",")} mil`;
+    return String(count);
+  };
+
+  const setLikeState = ({ count, liked }) => {
+    if (likeCount && Number.isFinite(count)) likeCount.textContent = formatLikes(count);
+    if (!likeButton) return;
+    likeButton.setAttribute("aria-pressed", String(Boolean(liked)));
+    likeButton.classList.toggle("is-liked", Boolean(liked));
+    if (likeLabel) likeLabel.textContent = liked ? "Curtido" : "Curtir";
+    const icon = likeButton.querySelector("[aria-hidden='true']");
+    if (icon) icon.textContent = liked ? "♥" : "♡";
+  };
+
+  const loadLikes = async () => {
+    if (!likeButton || !slug) return;
+    const liked = localStorage.getItem(likeStorageKey) === "1";
+    setLikeState({ liked });
+    try {
+      const response = await fetch(`/.netlify/functions/journal-likes?slug=${encodeURIComponent(slug)}`);
+      if (!response.ok) throw new Error("likes unavailable");
+      const data = await response.json();
+      likeButton.hidden = false;
+      setLikeState({ count: Number(data.count) || 0, liked });
+    } catch {
+      likeButton.classList.add("is-offline");
+    }
+  };
+
+  likeButton?.addEventListener("click", async () => {
+    if (!slug || localStorage.getItem(likeStorageKey) === "1") return;
+    likeButton.disabled = true;
+    const currentCount = Number(likeCount?.textContent.replace(/\D/g, "")) || 0;
+    setLikeState({ count: currentCount + 1, liked: true });
+    localStorage.setItem(likeStorageKey, "1");
+
+    try {
+      const response = await fetch(`/.netlify/functions/journal-likes?slug=${encodeURIComponent(slug)}`, { method: "POST" });
+      if (!response.ok) throw new Error("like failed");
+      const data = await response.json();
+      setLikeState({ count: Number(data.count) || currentCount + 1, liked: true });
+    } catch {
+      localStorage.removeItem(likeStorageKey);
+      setLikeState({ count: currentCount, liked: false });
+      likeButton.classList.add("is-offline");
+    } finally {
+      likeButton.disabled = false;
+    }
+  });
+
+  loadLikes();
 
   if (whatsapp) whatsapp.href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   if (linkedin) linkedin.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
