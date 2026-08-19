@@ -18,6 +18,9 @@ const routes = new Map([
   ["/projetos/c-arq", "case-carq.html"],
   ["/projetos/beleza-wellness", "case-beleza-wellness.html"],
   ["/projetos/cavali-carvalho", "case-cavalicarvalho.html"],
+  ["/projetos/studio-natalia-deitos", "case-studio-natalia-deitos.html"],
+  ["/projetos/gourmet-house", "case-gourmet-house.html"],
+  ["/projetos/vontri", "case-vontri.html"],
 ]);
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",

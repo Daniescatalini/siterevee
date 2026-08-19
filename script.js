@@ -571,10 +571,10 @@ const earthCanvas = document.querySelector("#earthCanvas");
 if (earthCanvas) {
   const ctx = earthCanvas.getContext("2d");
   const accent = {
-    line: "rgba(170,92,255,",
-    glow: "rgba(203,84,255,",
-    hot: "rgba(235,84,255,",
-    blue: "rgba(112,116,255,"
+    line: "rgba(184,47,107,",
+    glow: "rgba(184,47,107,",
+    hot: "rgba(184,47,107,",
+    blue: "rgba(184,47,107,"
   };
   const countries = [
     { name: "Brasil", lat: -14, lon: -51 },
@@ -939,134 +939,6 @@ if (earthCanvas) {
   drawEarth();
 }
 
-const aiAnswers = {
-  position: { title: "Posicionamento é uma decisão de percepção.", body: "Quando a marca precisa explicar demais, disputa por preço ou não é lembrada por uma ideia clara, existe um provável desalinhamento entre promessa, percepção e mercado." },
-  value: { title: "Valor precisa ser percebido antes de ser comparado.", body: "Linguagem, prova, experiência e consistência devem sustentar a mesma leitura. Quando isso não acontece, o cliente enxerga custo antes de compreender valor." },
-  sales: { title: "Crescimento não é apenas uma questão de alcance.", body: "Marca, oferta, comunicação e experiência precisam contar a mesma história. Aumentar volume sem organizar essas camadas tende a amplificar a falta de clareza." },
-  identity: { title: "Identidade visual é consequência de estratégia.", body: "Mudar logo, cor ou tipografia antes de definir posicionamento costuma tratar o sintoma. Primeiro vem a percepção desejada; depois, a forma capaz de sustentá-la." }
-};
-
-const aiOutput = document.querySelector("#aiOutput");
-const aiForm = document.querySelector(".ai-chat-input");
-const aiInput = aiForm?.querySelector("input");
-const aiPrompts = document.querySelector(".ai-chat-prompts");
-const aiConversation = { profile: {}, asked: new Set(), lastQuestion: null };
-
-function appendAiMessage(role, content) {
-  if (!aiOutput) return null;
-  const message = document.createElement("div");
-  message.className = `ai-message ai-message-${role}`;
-  if (typeof content === "string") {
-    const paragraph = document.createElement("p");
-    paragraph.textContent = content;
-    message.append(paragraph);
-  } else {
-    if (content.kicker) {
-      const kicker = document.createElement("span");
-      kicker.className = "ai-message-kicker";
-      kicker.textContent = content.kicker;
-      message.append(kicker);
-    }
-    if (content.title) {
-      const title = document.createElement("strong");
-      title.className = "ai-message-title";
-      title.textContent = content.title;
-      message.append(title);
-    }
-    [content.body, content.question].filter(Boolean).forEach((text) => {
-      const paragraph = document.createElement("p");
-      paragraph.textContent = text;
-      message.append(paragraph);
-    });
-  }
-  aiOutput.append(message);
-  aiOutput.scrollTop = aiOutput.scrollHeight;
-  return message;
-}
-
-function registerConversationSignals(message) {
-  const text = message.toLowerCase();
-  if (aiConversation.lastQuestion) aiConversation.profile[aiConversation.lastQuestion] = message;
-  if (/roupa|moda|vestuário|loja|e-?commerce/.test(text)) aiConversation.profile.segment = message;
-  if (/instagram|google|indicação|loja física|site|whatsapp/.test(text)) aiConversation.profile.channel = message;
-  if (/preço|car[oa]|barat|valor|premium/.test(text)) aiConversation.profile.perception = message;
-  if (/crescer|nacional|vender|cliente|reposicionar|transformar/.test(text)) aiConversation.profile.objective = message;
-}
-
-function nextStrategicQuestion() {
-  const questions = [
-    ["segment", "Em qual segmento a empresa atua e o que ela oferece de mais relevante?"],
-    ["channel", "Hoje, por quais canais os clientes chegam até a marca?"],
-    ["perception", "O que você gostaria que o cliente percebesse antes de comparar preço?"],
-    ["objective", "Qual mudança de percepção teria maior impacto no crescimento da empresa agora?"]
-  ];
-  const next = questions.find(([key]) => !aiConversation.profile[key] && !aiConversation.asked.has(key));
-  if (!next) {
-    aiConversation.lastQuestion = null;
-    return "Com esse contexto, já é possível iniciar um diagnóstico mais preciso. Se desejar, continue contando detalhes ou inicie um projeto com a Revee.";
-  }
-  aiConversation.asked.add(next[0]);
-  aiConversation.lastQuestion = next[0];
-  return next[1];
-}
-
-function buildStrategicReply(message) {
-  registerConversationSignals(message);
-  const text = message.toLowerCase();
-  let title = "Existe um ponto estratégico a investigar.";
-  let body = "O sinal que você trouxe parece estar ligado à distância entre o que a empresa entrega e o que o mercado consegue perceber com clareza.";
-
-  if (/preço|car[oa]|barat|valor/.test(text)) {
-    title = "O problema parece ser percepção de valor.";
-    body = "Quando o cliente considera a oferta cara antes de compreender seus diferenciais, a marca ainda não tornou tangíveis a qualidade, a escolha e o significado da entrega.";
-  } else if (/instagram|conteúdo|post|social/.test(text)) {
-    title = "O Instagram é o canal, não necessariamente a causa.";
-    body = "Antes de aumentar frequência ou mudar estética, vale verificar se narrativa, posicionamento e prova constroem uma leitura consistente da marca.";
-  } else if (/logo|identidade|visual|design/.test(text)) {
-    title = "A identidade pode estar expressando uma estratégia insuficiente.";
-    body = "Uma mudança visual ganha força quando nasce de uma definição clara de público, promessa, território e percepção desejada.";
-  } else if (/venda|cliente|crescer|crescimento/.test(text)) {
-    title = "A marca pode estar limitando a conversão.";
-    body = "Quando posicionamento, oferta e experiência não sustentam a mesma promessa, crescer exige esforço demais e a decisão tende a voltar para preço.";
-  }
-
-  return { kicker: "Leitura inicial", title, body, question: nextStrategicQuestion() };
-}
-
-document.querySelectorAll("[data-answer]").forEach((button) => {
-  button.addEventListener("click", async () => {
-    const answer = aiAnswers[button.dataset.answer];
-    if (!aiOutput || !answer) return;
-    aiPrompts?.classList.add("is-hidden");
-    appendAiMessage("user", button.textContent.trim());
-    const thinking = appendAiMessage("assistant", "Analisando o sinal...");
-    await wait(360);
-    if (thinking) {
-      thinking.remove();
-      appendAiMessage("assistant", { kicker: "Leitura inicial", ...answer, question: nextStrategicQuestion() });
-    }
-    aiOutput.scrollTop = aiOutput.scrollHeight;
-  });
-});
-
-if (aiForm && aiOutput && aiInput) {
-  aiForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const message = aiInput.value.trim();
-    if (!message) return;
-    aiPrompts?.classList.add("is-hidden");
-    appendAiMessage("user", message);
-    const thinking = appendAiMessage("assistant", "Analisando o sinal por trás da pergunta...");
-    await wait(420);
-    if (thinking) {
-      thinking.remove();
-      appendAiMessage("assistant", buildStrategicReply(message));
-    }
-    aiInput.value = "";
-    aiOutput.scrollTop = aiOutput.scrollHeight;
-  });
-}
-
 document.querySelectorAll(".service-toggle").forEach((button) => {
   button.addEventListener("click", () => {
     const row = button.closest(".service-row");
@@ -1075,6 +947,34 @@ document.querySelectorAll(".service-toggle").forEach((button) => {
     });
     row.classList.toggle("is-open");
   });
+});
+
+document.querySelectorAll("[data-logo-track]").forEach((track) => {
+  let isDragging = false;
+  let startX = 0;
+  let startScroll = 0;
+
+  const stopDragging = () => {
+    isDragging = false;
+    track.classList.remove("is-dragging");
+  };
+
+  track.addEventListener("pointerdown", (event) => {
+    isDragging = true;
+    startX = event.clientX;
+    startScroll = track.scrollLeft;
+    track.classList.add("is-dragging");
+    track.setPointerCapture?.(event.pointerId);
+  });
+
+  track.addEventListener("pointermove", (event) => {
+    if (!isDragging) return;
+    track.scrollLeft = startScroll - (event.clientX - startX);
+  });
+
+  track.addEventListener("pointerup", stopDragging);
+  track.addEventListener("pointercancel", stopDragging);
+  track.addEventListener("mouseleave", stopDragging);
 });
 
 const caseDetails = {
@@ -1184,35 +1084,6 @@ if (caseModal) {
   });
 }
 
-const aiWidget = document.querySelector(".ai-widget");
-const aiOrb = document.querySelector(".ai-orb");
-const aiClose = document.querySelector(".ai-close");
-
-if (aiWidget) {
-  aiWidget.classList.remove("is-open");
-}
-
-if (aiWidget && aiOrb) {
-  aiOrb.addEventListener("click", () => {
-    const isOpen = aiWidget.classList.toggle("is-open");
-    aiOrb.setAttribute("aria-expanded", String(isOpen));
-  });
-}
-
-if (aiWidget && aiClose) {
-  aiClose.addEventListener("click", () => {
-    aiWidget.classList.remove("is-open");
-    if (aiOrb) aiOrb.setAttribute("aria-expanded", "false");
-  });
-}
-
-document.addEventListener("keydown", (event) => {
-  if (event.key !== "Escape" || !aiWidget?.classList.contains("is-open")) return;
-  aiWidget.classList.remove("is-open");
-  aiOrb?.setAttribute("aria-expanded", "false");
-  aiOrb?.focus();
-});
-
 document.querySelectorAll(".accordion-item").forEach((item) => {
   item.addEventListener("click", () => {
     document.querySelectorAll(".accordion-item").forEach((other) => {
@@ -1221,3 +1092,26 @@ document.querySelectorAll(".accordion-item").forEach((item) => {
     item.classList.toggle("is-open");
   });
 });
+
+const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+if (!motionQuery.matches) {
+  document
+    .querySelectorAll(".case-card, [data-service-card], .trusted-logo-card, .journal-card")
+    .forEach((element) => {
+      element.classList.add("has-magnetic-motion");
+
+      element.addEventListener("pointermove", (event) => {
+        const rect = element.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width - 0.5) * 8;
+        const y = ((event.clientY - rect.top) / rect.height - 0.5) * 8;
+        element.style.setProperty("--motion-x", `${x}px`);
+        element.style.setProperty("--motion-y", `${y}px`);
+      });
+
+      element.addEventListener("pointerleave", () => {
+        element.style.setProperty("--motion-x", "0px");
+        element.style.setProperty("--motion-y", "0px");
+      });
+    });
+}
