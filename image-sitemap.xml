@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://reveebrand.com/revee-brand</loc>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-logo-oficial.jpg</image:loc>
+      <image:caption>Logo oficial da Revee Brand, consultoria de branding e posicionamento de marca.</image:caption>
+      <image:title>Logo oficial da Revee Brand</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-consultoria-de-marca.jpg</image:loc>
+      <image:caption>Revee Brand, consultoria de marca especializada em branding, identidade visual e sites.</image:caption>
+      <image:title>Revee Brand consultoria de marca</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-branding-estrategico.jpg</image:loc>
+      <image:caption>Projeto de branding estratégico criado pela Revee Brand.</image:caption>
+      <image:title>Revee Brand branding estrategico</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-identidade-visual.jpg</image:loc>
+      <image:caption>Projeto de identidade visual desenvolvido pela Revee Brand.</image:caption>
+      <image:title>Revee Brand identidade visual</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-site-oficial.jpg</image:loc>
+      <image:caption>Sites e landing pages com estratégia de marca da Revee Brand.</image:caption>
+      <image:title>Revee Brand site oficial</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-projetos-de-branding.jpg</image:loc>
+      <image:caption>Projetos de branding e identidade visual desenvolvidos pela Revee Brand.</image:caption>
+      <image:title>Revee Brand projetos de branding</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://reveebrand.com/sobre</loc>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-logo-oficial.jpg</image:loc>
+      <image:caption>Identidade oficial da Revee Brand, consultoria de branding e posicionamento de marca.</image:caption>
+      <image:title>Revee Brand logo oficial</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-identidade-visual.jpg</image:loc>
+      <image:caption>Projeto de identidade visual desenvolvido pela Revee Brand.</image:caption>
+      <image:title>Revee Brand identidade visual</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://reveebrand.com/</loc>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-consultoria-de-marca.jpg</image:loc>
+      <image:caption>Revee Brand, consultoria de marca especializada em branding, identidade visual e sites.</image:caption>
+      <image:title>Revee Brand consultoria de marca</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://reveebrand.com/servicos</loc>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-site-oficial.jpg</image:loc>
+      <image:caption>Revee Brand, consultoria de marca especializada em branding, identidade visual e sites.</image:caption>
+      <image:title>Revee Brand site oficial</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://reveebrand.com/projetos</loc>
+    <image:image>
+      <image:loc>https://reveebrand.com/assets/seo/official/revee-brand-projetos-de-branding.jpg</image:loc>
+      <image:caption>Projetos de branding e identidade visual desenvolvidos pela Revee Brand.</image:caption>
+      <image:title>Revee Brand projetos de branding</image:title>
+    </image:image>
+  </url>
+</urlset>

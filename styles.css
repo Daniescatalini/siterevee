@@ -6428,6 +6428,62 @@ body {
   line-height: 1.75;
 }
 
+.brand-entity-section,
+.brand-entity-services {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.brand-entity-head {
+  position: sticky;
+  top: 120px;
+}
+
+.brand-entity-head h2 {
+  margin-top: 2.25rem;
+  font-size: var(--display-md);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.brand-entity-head p {
+  max-width: 620px;
+  margin-top: 1.5rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.brand-entity-gallery {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.brand-entity-gallery figure {
+  margin: 0;
+  border: 1px solid var(--line);
+  background: #050505;
+  overflow: hidden;
+}
+
+.brand-entity-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 74svh;
+  object-fit: contain;
+  background: #000;
+}
+
+.brand-entity-gallery figcaption {
+  padding: 1rem 1.15rem 1.1rem;
+  color: rgba(246, 244, 239, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
 .timeline-head {
   max-width: 1120px;
 }
@@ -6811,11 +6867,17 @@ textarea:focus-visible {
   .sustainability-section,
   .culture-values,
   .service-lab,
+  .brand-entity-section,
+  .brand-entity-services,
   .leader-section,
   .tech-lead-section,
   .project-text-block {
     grid-template-columns: 1fr;
     gap: 3.5rem;
+  }
+
+  .brand-entity-head {
+    position: static;
   }
 
   .formula-steps,
@@ -8883,6 +8945,12 @@ span strong,
 .project-hero-copy h1 strong {
   color: var(--accent) !important;
   -webkit-text-fill-color: var(--accent) !important;
+}
+
+.hero-method-title + .hero-support strong {
+  color: var(--accent) !important;
+  -webkit-text-fill-color: var(--accent) !important;
+  font-weight: 700;
 }
 
 .formula-head h2 strong,
