@@ -1789,7 +1789,7 @@ body.journal-body:not(.author-page) .journal-footer {
 .author-hero h1 strong,
 .author-social h2 strong,
 .article-author h2 strong {
-  color: var(--accent, #b82f6b) !important;
+  color: var(--accent, #f4f3ef) !important;
 }
 
 @media (max-width: 1024px) {

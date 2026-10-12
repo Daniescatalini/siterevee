@@ -67,10 +67,9 @@ async function runHeroMethodSequence() {
   const heroCopy = heroTyped.closest(".hero-copy");
   const finalMarkup = heroTyped.innerHTML.trim();
   const lines = [
-    "Toda empresa cresce.",
-    "Poucas constroem uma marca",
-    "capaz de sustentar esse",
-    "crescimento."
+    "Criamos marcas de alto padrão",
+    "para negócios que querem crescer",
+    "com estratégia."
   ];
 
   await introPromise;
@@ -571,10 +570,10 @@ const earthCanvas = document.querySelector("#earthCanvas");
 if (earthCanvas) {
   const ctx = earthCanvas.getContext("2d");
   const accent = {
-    line: "rgba(184,47,107,",
-    glow: "rgba(184,47,107,",
-    hot: "rgba(184,47,107,",
-    blue: "rgba(184,47,107,"
+    line: "rgba(244,243,239,",
+    glow: "rgba(244,243,239,",
+    hot: "rgba(244,243,239,",
+    blue: "rgba(244,243,239,"
   };
   const countries = [
     { name: "Brasil", lat: -14, lon: -51 },
