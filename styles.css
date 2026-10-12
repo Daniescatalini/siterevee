@@ -8958,6 +8958,40 @@ span strong,
   font-weight: 700;
 }
 
+.hero-copy.is-sequencing .hero-focus-premium,
+.hero-copy.is-sequencing .hero-focus-grow,
+.hero-copy.is-sequencing .hero-focus-strategy {
+  animation: heroWordThicken 0.72s cubic-bezier(.22,.61,.36,1) both !important;
+  font-weight: 760;
+}
+
+.hero-copy.is-sequencing .hero-focus-grow {
+  animation-delay: 0.14s !important;
+}
+
+.hero-copy.is-sequencing .hero-focus-strategy {
+  animation-delay: 0.28s !important;
+}
+
+@keyframes heroWordThicken {
+  0% {
+    font-weight: 400;
+    filter: blur(0.01px);
+    transform: translateY(0);
+  }
+
+  58% {
+    font-weight: 780;
+    transform: translateY(-0.015em);
+  }
+
+  100% {
+    font-weight: 760;
+    filter: none;
+    transform: translateY(0);
+  }
+}
+
 .formula-head h2 strong,
 .transform-head h2 strong,
 .trusted-brands-head h2 strong,
