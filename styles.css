@@ -9500,3 +9500,173 @@ span strong,
     width: 100%;
   }
 }
+
+.services-page-accordion {
+  margin-top: 0;
+}
+
+.services-page-accordion .service-row {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: serviceRowsIn 0.72s cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+.services-page-accordion .service-row:nth-child(2) { animation-delay: 0.07s; }
+.services-page-accordion .service-row:nth-child(3) { animation-delay: 0.14s; }
+.services-page-accordion .service-row:nth-child(4) { animation-delay: 0.21s; }
+.services-page-accordion .service-row:nth-child(5) { animation-delay: 0.28s; }
+.services-page-accordion .service-row:nth-child(6) { animation-delay: 0.35s; }
+
+.services-page-accordion .service-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: rgba(244, 243, 239, 0.045);
+  transition: width 0.42s cubic-bezier(.22,.61,.36,1);
+}
+
+.services-page-accordion .service-row:hover::before,
+.services-page-accordion .service-row.is-open::before {
+  width: 100%;
+}
+
+.services-page-accordion .service-toggle {
+  position: relative;
+  min-height: clamp(86px, 9vw, 126px);
+  padding: 0 clamp(0.2rem, 1.4vw, 1.1rem);
+}
+
+.services-page-accordion .service-toggle span {
+  max-width: 980px;
+  font-size: clamp(1.65rem, 3.8vw, 4.65rem) !important;
+  font-weight: 400;
+}
+
+.services-page-accordion .service-toggle strong {
+  flex: 0 0 auto;
+}
+
+.services-page-accordion .service-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(220px, 0.42fr);
+  gap: 18px clamp(2rem, 5vw, 5rem);
+  padding-left: clamp(0.2rem, 1.4vw, 1.1rem);
+  padding-right: clamp(0.2rem, 1.4vw, 1.1rem);
+}
+
+.services-page-accordion .service-row.is-open .service-content {
+  max-height: 340px;
+  padding-top: 0;
+  padding-bottom: 34px;
+}
+
+.services-page-accordion .service-content p {
+  margin: 0;
+}
+
+.services-page-accordion .service-items {
+  align-self: start;
+  color: rgba(244, 243, 239, 0.44);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.65;
+  text-transform: uppercase;
+}
+
+.services-page-accordion .service-card-cta {
+  grid-column: 1;
+  min-height: auto;
+  margin-top: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--white);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.services-page-accordion .service-card-cta:hover {
+  background: transparent;
+  color: var(--white);
+  transform: translateX(8px);
+}
+
+@keyframes serviceRowsIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-direction,
+.service-premium,
+.service-final-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-direction::after,
+.service-premium::after,
+.service-final-cta::after {
+  content: "";
+  position: absolute;
+  inset: auto var(--pad) 0 var(--pad);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(244, 243, 239, 0.5), transparent);
+  opacity: 0.38;
+}
+
+.service-direction h2 strong,
+.service-premium h2 strong,
+.service-final-cta h2 strong {
+  font-weight: 760;
+}
+
+.service-direction p:nth-of-type(n+2) {
+  max-width: 660px;
+}
+
+.service-direction .page-hero-cta,
+.service-final-actions .page-hero-cta,
+.service-final-actions .secondary-action {
+  border-radius: 0;
+}
+
+@media (max-width: 900px) {
+  .services-page-accordion .service-content {
+    grid-template-columns: 1fr;
+  }
+
+  .services-page-accordion .service-row.is-open .service-content {
+    max-height: 460px;
+  }
+}
+
+@media (max-width: 620px) {
+  .services-page-accordion .service-toggle {
+    gap: 16px;
+    min-height: 86px;
+  }
+
+  .services-page-accordion .service-toggle span {
+    font-size: clamp(1.6rem, 9vw, 2.8rem) !important;
+  }
+
+  .services-page-accordion .service-toggle strong {
+    width: 34px;
+    height: 34px;
+  }
+
+  .services-page-accordion .service-row.is-open .service-content {
+    max-height: 520px;
+  }
+
+  .services-page-accordion .service-card-cta {
+    width: fit-content;
+  }
+}

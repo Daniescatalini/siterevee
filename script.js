@@ -939,12 +939,17 @@ if (earthCanvas) {
 }
 
 document.querySelectorAll(".service-toggle").forEach((button) => {
+  button.setAttribute("aria-expanded", "false");
   button.addEventListener("click", () => {
     const row = button.closest(".service-row");
     document.querySelectorAll(".service-row").forEach((item) => {
-      if (item !== row) item.classList.remove("is-open");
+      if (item !== row) {
+        item.classList.remove("is-open");
+        item.querySelector(".service-toggle")?.setAttribute("aria-expanded", "false");
+      }
     });
     row.classList.toggle("is-open");
+    button.setAttribute("aria-expanded", String(row.classList.contains("is-open")));
   });
 });
 
