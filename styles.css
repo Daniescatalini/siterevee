@@ -1858,7 +1858,7 @@ h3 strong,
 
 .cases-head {
   display: grid;
-  grid-template-columns: minmax(0, 0.78fr) auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 28px;
   align-items: stretch;
   margin-top: 34px;
@@ -1872,17 +1872,19 @@ h3 strong,
 }
 
 .cases-head p {
-  grid-column: 1 / -1;
+  grid-column: 1 / 3;
   align-self: start;
 }
 
 .cases-head a {
+  grid-column: 3;
+  grid-row: 2;
   color: var(--white);
   font-size: 0.82rem;
   font-weight: 700;
   align-self: end;
   justify-self: end;
-  margin-bottom: 2px;
+  margin-bottom: 0;
 }
 
 .editorial-case-grid {
