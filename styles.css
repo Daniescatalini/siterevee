@@ -9236,3 +9236,66 @@ span strong,
     filter: brightness(1.06);
   }
 }
+
+.about-page .institution-copy h1,
+.about-page .institution-copy h2,
+.about-page .brand-entity-head h2,
+.about-page .timeline-head h2,
+.about-page .leader-copy h2,
+.about-page .closing-copy h2 {
+  font-size: clamp(2.2rem, 4.1vw, 4.45rem) !important;
+  line-height: 1.04 !important;
+  max-width: 1080px;
+}
+
+.about-page .closing-copy h2 {
+  font-size: clamp(2.1rem, 3.8vw, 4.1rem) !important;
+  max-width: 980px;
+}
+
+.about-page .closing-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(2rem, 3vw, 3rem);
+}
+
+.about-page .closing-actions a {
+  display: inline-grid;
+  place-items: center;
+  min-height: 54px;
+  margin-top: 0;
+  padding: 0 28px;
+  border: 1px solid rgba(244, 243, 239, 0.28);
+  color: var(--white);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.about-page .closing-actions a:first-child {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--black);
+}
+
+.about-page .closing-actions a:hover {
+  border-color: var(--white);
+}
+
+@media (max-width: 620px) {
+  .about-page .institution-copy h1,
+  .about-page .institution-copy h2,
+  .about-page .brand-entity-head h2,
+  .about-page .timeline-head h2,
+  .about-page .leader-copy h2,
+  .about-page .closing-copy h2 {
+    font-size: clamp(2rem, 11vw, 3.25rem) !important;
+  }
+
+  .about-page .closing-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
