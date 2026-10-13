@@ -67,9 +67,9 @@ async function runHeroMethodSequence() {
   const heroCopy = heroTyped.closest(".hero-copy");
   const finalMarkup = heroTyped.innerHTML.trim();
   const lines = [
-    "Criamos marcas de alto padrão",
-    "para negócios que querem crescer",
-    "com estratégia."
+    "Consultoria de marca para",
+    "negócios que querem crescer",
+    "com intenção."
   ];
 
   await introPromise;
