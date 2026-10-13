@@ -1866,6 +1866,7 @@ h3 strong,
 }
 
 .cases-head h2 {
+  grid-column: 1 / 3;
   font-size: clamp(1.5rem, 3vw, 3.4rem);
   line-height: 1.06;
   font-weight: 400;
@@ -6027,9 +6028,28 @@ body {
   margin: 0;
   color: var(--white);
   font-family: var(--font-title);
-  font-size: clamp(2.7rem, 6vw, 6.5rem);
+  font-size: clamp(2.45rem, 5.45vw, 5.9rem);
   font-weight: 400;
   line-height: 0.95;
+}
+
+.final-cta-copy .final-cta-line {
+  white-space: nowrap;
+}
+
+.final-cta-copy [data-type-hero].is-complete strong {
+  animation: heroWordThicken 0.72s cubic-bezier(.22,.61,.36,1) both !important;
+  font-weight: 760;
+}
+
+.final-cta-copy [data-type-hero].is-complete strong:nth-of-type(2) {
+  animation-delay: 0.14s !important;
+}
+
+@media (max-width: 760px) {
+  .final-cta-copy .final-cta-line {
+    white-space: normal;
+  }
 }
 
 .statement-grid {
@@ -9058,12 +9078,14 @@ span strong,
 
 .hero-copy.is-sequencing .hero-focus-premium,
 .hero-copy.is-sequencing .hero-focus-grow,
-.hero-copy.is-sequencing .hero-focus-strategy {
+.hero-copy.is-sequencing .hero-focus-strategy,
+.hero-copy.is-sequencing .hero-focus-intention {
   animation: heroWordThicken 0.72s cubic-bezier(.22,.61,.36,1) both !important;
   font-weight: 760;
 }
 
-.hero-copy.is-sequencing .hero-focus-grow {
+.hero-copy.is-sequencing .hero-focus-grow,
+.hero-copy.is-sequencing .hero-focus-intention {
   animation-delay: 0.14s !important;
 }
 
