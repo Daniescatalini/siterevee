@@ -66,11 +66,7 @@ async function runHeroMethodSequence() {
   if (!heroTyped.classList.contains("editorial-title")) return;
   const heroCopy = heroTyped.closest(".hero-copy");
   const finalMarkup = heroTyped.innerHTML.trim();
-  const lines = [
-    "Consultoria de marca para",
-    "negócios que querem crescer",
-    "com intenção."
-  ];
+  const lines = Array.from(heroTyped.querySelectorAll(".hero-line"), (line) => line.textContent);
 
   await introPromise;
   await wait(180);
@@ -87,7 +83,7 @@ async function runHeroMethodSequence() {
       await wait(char === " " ? 18 : 28);
     }
     if (lineIndex < lines.length - 1) {
-      heroTyped.append(document.createElement("br"));
+      heroTyped.append(document.createTextNode(" "), document.createElement("br"));
       await wait(90);
     }
   }
