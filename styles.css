@@ -9672,9 +9672,9 @@ span strong,
 }
 
 /* Lead the selected projects with a landscape fashion case. */
-.editorial-case-grid .case-card.zurali-feature {
+.editorial-case-grid .case-card.fashion-feature {
   grid-column: 1 / -1;
   aspect-ratio: 3 / 2;
   min-height: 0 !important;
 }
-.editorial-case-grid .zurali-feature img { object-position: center; }
+.editorial-case-grid .fashion-feature img { object-position: center; }
