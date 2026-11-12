@@ -15,12 +15,14 @@ const pages = [
   ["/projetos/studio-natalia-deitos", "0.7"],
   ["/projetos/gourmet-house", "0.7"],
   ["/projetos/vontri", "0.7"],
+  ["/projetos/zurali", "0.8"],
   ["/thejournal", "0.8"],
   ["/daniela-escatalini", "0.7"],
   ...journalArticles.map((article) => [`/thejournal/${article.slug}`, "0.7"]),
 ];
 
 const imageEntries = {
+  "/projetos/zurali": [["assets/optimized/zurali/capa.webp", "Naming e identidade visual Zurali, marca de moda feminina.", "Zurali — Revee Brand"]],
   "/": [
     ["assets/seo/official/revee-brand-consultoria-de-marca.jpg", "Revee Brand, consultoria de marca especializada em branding, identidade visual e sites.", "Revee Brand consultoria de marca"],
   ],

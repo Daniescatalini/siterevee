@@ -21,6 +21,7 @@ const routes = new Map([
   ["/projetos/studio-natalia-deitos", "case-studio-natalia-deitos.html"],
   ["/projetos/gourmet-house", "case-gourmet-house.html"],
   ["/projetos/vontri", "case-vontri.html"],
+  ["/projetos/zurali", "case-zurali.html"],
 ]);
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",

@@ -9670,3 +9670,11 @@ span strong,
     width: fit-content;
   }
 }
+
+/* Lead the selected projects with a landscape fashion case. */
+.editorial-case-grid .case-card.zurali-feature {
+  grid-column: 1 / -1;
+  aspect-ratio: 3 / 2;
+  min-height: 0 !important;
+}
+.editorial-case-grid .zurali-feature img { object-position: center; }
