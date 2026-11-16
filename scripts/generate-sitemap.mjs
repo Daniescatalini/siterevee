@@ -17,12 +17,14 @@ const pages = [
   ["/projetos/vontri", "0.7"],
   ["/projetos/zurali", "0.8"],
   ["/projetos/rallen", "0.8"],
+  ["/projetos/calari", "0.8"],
   ["/thejournal", "0.8"],
   ["/daniela-escatalini", "0.7"],
   ...journalArticles.map((article) => [`/thejournal/${article.slug}`, "0.7"]),
 ];
 
 const imageEntries = {
+  "/projetos/calari": [["assets/optimized/calari/capa.webp", "Identidade visual Calari, marca de moda feminina.", "Calari — Revee Brand"]],
   "/projetos/rallen": [["assets/optimized/rallen/capa.webp", "Identidade visual Rallen, marca de moda feminina.", "Rallen — Revee Brand"]],
   "/projetos/zurali": [["assets/optimized/zurali/capa.webp", "Naming e identidade visual Zurali, marca de moda feminina.", "Zurali — Revee Brand"]],
   "/": [

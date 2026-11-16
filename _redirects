@@ -37,3 +37,6 @@
 
 /case-rallen.html               /projetos/rallen                 301!
 /projetos/rallen                /case-rallen.html                200
+
+/case-calari.html /projetos/calari 301!
+/projetos/calari /case-calari.html 200
