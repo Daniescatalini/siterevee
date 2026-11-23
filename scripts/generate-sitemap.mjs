@@ -17,6 +17,7 @@ const pages = [
   ["/projetos/vontri", "0.7"],
   ["/projetos/zurali", "0.8"],
   ["/projetos/rallen", "0.8"],
+  ["/projetos/unare", "0.8"],
   ["/projetos/calari", "0.8"],
   ["/thejournal", "0.8"],
   ["/daniela-escatalini", "0.7"],
@@ -24,6 +25,9 @@ const pages = [
 ];
 
 const imageEntries = {
+  "/projetos/unare": [
+    ["assets/optimized/unare/etiquetas.webp", "Etiquetas Unare em uma arara de roupas", "Unare — Revee Brand"],
+  ],
   "/projetos/calari": [["assets/optimized/calari/capa.webp", "Identidade visual Calari, marca de moda feminina.", "Calari — Revee Brand"]],
   "/projetos/rallen": [["assets/optimized/rallen/capa.webp", "Identidade visual Rallen, marca de moda feminina.", "Rallen — Revee Brand"]],
   "/projetos/zurali": [["assets/optimized/zurali/capa.webp", "Naming e identidade visual Zurali, marca de moda feminina.", "Zurali — Revee Brand"]],
