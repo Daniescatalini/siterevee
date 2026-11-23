@@ -23,6 +23,7 @@ const routes = new Map([
   ["/projetos/vontri", "case-vontri.html"],
   ["/projetos/zurali", "case-zurali.html"],
   ["/projetos/rallen", "case-rallen.html"],
+  ["/projetos/unare", "case-unare.html"],
   ["/projetos/calari", "case-calari.html"],
 ]);
 const mimeTypes = {
